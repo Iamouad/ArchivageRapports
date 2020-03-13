@@ -61,6 +61,7 @@ namespace realMiniProjet.Controllers
             ViewBag.ReturnUrl = returnUrl;
             Entities entities = new Entities();
             var role = entities.AspNetRoles.Where(rl => rl.Name.Equals("ADMIN")).FirstOrDefault();
+            ViewData["role"] = role.Name;
             return View();
         }
 
