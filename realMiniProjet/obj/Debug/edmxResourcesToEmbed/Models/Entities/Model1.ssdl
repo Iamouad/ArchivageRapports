@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArchivedReports">
+    <Key>
+      <PropertyRef Name="Id_report" />
+    </Key>
+    <Property Name="Id_report" Type="int" Nullable="false" />
+    <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Id_filiere" Type="int" Nullable="false" />
+    <Property Name="RemarqueProf" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="DateUniv" Type="date" Nullable="false" />
+    <Property Name="Likes" Type="int" />
+    <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Filieres">
+    <Key>
+      <PropertyRef Name="Id_filiere" />
+    </Key>
+    <Property Name="Id_filiere" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom_filiere" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Groupes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Delais" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="Id_niveau" />
+    </Key>
+    <Property Name="Id_niveau" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom_niveau" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="Id_report" />
+    </Key>
+    <Property Name="Id_report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Id_filiere" Type="int" Nullable="false" />
+    <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="DateUniv" Type="date" Nullable="false" />
+    <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Cne" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Niveau" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Id_fil" Type="int" Nullable="false" />
+    <Property Name="Id_niv" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students_ArchivedReport">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_student" Type="int" Nullable="false" />
+    <Property Name="Id_archivedReport" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students_Groupes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_groupe" Type="int" Nullable="false" />
+    <Property Name="Id_student" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__ArchivedR__Id_fi__6383C8BA">
+    <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
+    <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Filieres">
+        <PropertyRef Name="Id_filiere" />
+      </Principal>
+      <Dependent Role="ArchivedReports">
+        <PropertyRef Name="Id_filiere" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ArchivedR__Id_pr__6477ECF3">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedReports">
+        <PropertyRef Name="Id_prof" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Groupes__Id_prof__693CA210">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="Groupes" Type="Self.Groupes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Groupes">
+        <PropertyRef Name="Id_prof" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__Id_filie__6A30C649">
+    <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Filieres">
+        <PropertyRef Name="Id_filiere" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Id_filiere" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__Id_prof__6B24EA82">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Id_prof" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_ar__6E01572D">
+    <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="1" />
+    <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedReports">
+        <PropertyRef Name="Id_report" />
+      </Principal>
+      <Dependent Role="Students_ArchivedReport">
+        <PropertyRef Name="Id_archivedReport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_gr__6FE99F9F">
+    <End Role="Groupes" Type="Self.Groupes" Multiplicity="1" />
+    <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groupes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Students_Groupes">
+        <PropertyRef Name="Id_groupe" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_st__6EF57B66">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Students_ArchivedReport">
+        <PropertyRef Name="Id_student" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_st__71D1E811">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Students_Groupes">
+        <PropertyRef Name="Id_student" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students__Id_fil__6C190EBB">
+    <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Filieres">
+        <PropertyRef Name="Id_filiere" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Id_fil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students__Id_niv__70DDC3D8">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_niveau" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Id_niv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students__UserId__6D0D32F4">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedReports" EntityType="Self.ArchivedReports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Filieres" EntityType="Self.Filieres" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Groupes" EntityType="Self.Groupes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ArchivedR__Id_fi__6383C8BA" Association="Self.FK__ArchivedR__Id_fi__6383C8BA">
+      <End Role="Filieres" EntitySet="Filieres" />
+      <End Role="ArchivedReports" EntitySet="ArchivedReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ArchivedR__Id_pr__6477ECF3" Association="Self.FK__ArchivedR__Id_pr__6477ECF3">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="ArchivedReports" EntitySet="ArchivedReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Groupes__Id_prof__693CA210" Association="Self.FK__Groupes__Id_prof__693CA210">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Groupes" EntitySet="Groupes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__Id_filie__6A30C649" Association="Self.FK__Report__Id_filie__6A30C649">
+      <End Role="Filieres" EntitySet="Filieres" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__Id_prof__6B24EA82" Association="Self.FK__Report__Id_prof__6B24EA82">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_ar__6E01572D" Association="Self.FK__Students___Id_ar__6E01572D">
+      <End Role="ArchivedReports" EntitySet="ArchivedReports" />
+      <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_gr__6FE99F9F" Association="Self.FK__Students___Id_gr__6FE99F9F">
+      <End Role="Groupes" EntitySet="Groupes" />
+      <End Role="Students_Groupes" EntitySet="Students_Groupes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_st__6EF57B66" Association="Self.FK__Students___Id_st__6EF57B66">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_st__71D1E811" Association="Self.FK__Students___Id_st__71D1E811">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Students_Groupes" EntitySet="Students_Groupes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students__Id_fil__6C190EBB" Association="Self.FK__Students__Id_fil__6C190EBB">
+      <End Role="Filieres" EntitySet="Filieres" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students__Id_niv__70DDC3D8" Association="Self.FK__Students__Id_niv__70DDC3D8">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students__UserId__6D0D32F4" Association="Self.FK__Students__UserId__6D0D32F4">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
