@@ -116,7 +116,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Cne" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="Niveau" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="Id_fil" Type="int" Nullable="false" />
     <Property Name="Id_niv" Type="int" Nullable="false" />
   </EntityType>
@@ -135,6 +134,16 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Id_groupe" Type="int" Nullable="false" />
     <Property Name="Id_student" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <Association Name="FK__ArchivedR__Id_fi__6383C8BA">
     <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
@@ -351,6 +360,7 @@
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__ArchivedR__Id_fi__6383C8BA" Association="Self.FK__ArchivedR__Id_fi__6383C8BA">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />

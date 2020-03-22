@@ -60,7 +60,7 @@ namespace realMiniProjet.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             Entities entities = new Entities();
-            var role = entities.AspNetRoles.Where(rl => rl.Name.Equals("ADMIN")).FirstOrDefault();
+            AspNetRole role = entities.AspNetRoles.Where(rl => rl.Name.Equals("ADMIN")).FirstOrDefault();
             ViewData["role"] = role.Name;
             return View();
         }
@@ -83,7 +83,7 @@ namespace realMiniProjet.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "User", new { mail = model.Email, password = model.Password});
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -167,7 +167,7 @@ namespace realMiniProjet.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }
@@ -396,7 +396,7 @@ namespace realMiniProjet.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //

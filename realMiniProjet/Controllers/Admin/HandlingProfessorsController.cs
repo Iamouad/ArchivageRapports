@@ -6,21 +6,29 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Helpers;
 using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
-    public class AspNetUsersController : Controller
+    [Authorize(Roles ="ADMIN")]
+    public class HandlingProfessorsController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: AspNetUsers
+        // GET: HandlingProfessors
         public ActionResult Index()
         {
-            return View(db.AspNetUsers.ToList());
+            //AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("PROFESSOR")).FirstOrDefault();
+
+            return View(db.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("PROFESSOR")).ToList());
+
+
+
+
         }
 
-        // GET: AspNetUsers/Details/5
+        // GET: HandlingProfessors/Details/
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -35,22 +43,29 @@ namespace realMiniProjet.Controllers.Admin
             return View(aspNetUser);
         }
 
-        // GET: AspNetUsers/Create
+        // GET: HandlingProfessors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AspNetUsers/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: HandlingProfessors/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        public ActionResult Create([Bind(Include = "Email,PasswordHash,PhoneNumber,UserName,FirstName,LastName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
+               
+                AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("PROFESSOR")).FirstOrDefault();
+                Random random = new Random();
+                int id = random.Next(1, 1000);
+                aspNetUser.Id = Crypto.Hash("user" + id);
+                aspNetUser.PasswordHash = Crypto.HashPassword(aspNetUser.PasswordHash);
                 db.AspNetUsers.Add(aspNetUser);
+                aspNetUser.AspNetRoles.Add(role);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -58,7 +73,7 @@ namespace realMiniProjet.Controllers.Admin
             return View(aspNetUser);
         }
 
-        // GET: AspNetUsers/Edit/5
+        // GET: HandlingProfessors/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -73,9 +88,9 @@ namespace realMiniProjet.Controllers.Admin
             return View(aspNetUser);
         }
 
-        // POST: AspNetUsers/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: HandlingProfessors/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FirstName,LastName")] AspNetUser aspNetUser)
@@ -89,7 +104,7 @@ namespace realMiniProjet.Controllers.Admin
             return View(aspNetUser);
         }
 
-        // GET: AspNetUsers/Delete/5
+        // GET: HandlingProfessors/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -104,7 +119,7 @@ namespace realMiniProjet.Controllers.Admin
             return View(aspNetUser);
         }
 
-        // POST: AspNetUsers/Delete/5
+        // POST: HandlingProfessors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

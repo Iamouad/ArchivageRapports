@@ -10,6 +10,7 @@ using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
+    [Authorize(Roles ="ADMIN")]
     public class Students_GroupesController : Controller
     {
         private Entities db = new Entities();
@@ -45,8 +46,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // POST: Students_Groupes/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Id_groupe,Id_student")] Students_Groupes students_Groupes)
@@ -81,8 +82,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // POST: Students_Groupes/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Id_groupe,Id_student")] Students_Groupes students_Groupes)

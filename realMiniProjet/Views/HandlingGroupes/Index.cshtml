@@ -1,0 +1,104 @@
+﻿@model IEnumerable<realMiniProjet.Models.Entities.Groupe>
+@Scripts.Render("~/toutjquery")
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+
+        <th>
+            @Html.Label("Members")
+        </th>
+
+        <th>
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Delais)
+        </th>
+
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+    </td>
+
+
+    <td>
+        @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
+
+
+    </td>
+    <td>
+        <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
+
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Delais)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>
+    }
+
+
+    
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        function showMembers(idGrp) {
+            console.log("wooooooooow");
+            var idList = 'grp' + idGrp;
+            var select = document.getElementById(idList);
+            console.log(select);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("getMembers")',
+                dataType: "json",
+                data: { id: idGrp },
+                success: function (data) {
+                var items = '';
+                console.log("successsssss");
+
+
+                    $.each(data, function (index, item) {
+                    var o = new Option(item.FirstName, item.FirstName);
+                    /// jquerify the DOM object 'o' so we can use the html method
+                        $(o).html(item.FirstName+" "+item.LastName);
+                        select.append(o);
+                        console.log(item.FirstName)
+                        //select.append($("<option>").val(item.FirstName).text(item.FirstName));
+                    });
+                    
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("errrrrr");
+                }
+            });
+        }
+    </script>
+}
+    </div>

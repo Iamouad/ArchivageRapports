@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using realMiniProjet.Models.Entities;
 
-namespace realMiniProjet.Controllers.Admin
+namespace realMiniProjet.Controllers
 {
     public class GroupesController : Controller
     {
@@ -44,8 +44,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // POST: Groupes/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe)
@@ -78,8 +78,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // POST: Groupes/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe)

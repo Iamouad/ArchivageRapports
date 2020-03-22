@@ -10,108 +10,109 @@ using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
-    [Authorize(Roles ="ADMIN")]
-    public class FilieresController : Controller
+    [Authorize(Roles = "ADMIN")]
+
+    public class LevelsController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: Filieres
+        // GET: Levels
         public ActionResult Index()
         {
-            return View(db.Filieres.ToList());
+            return View(db.Levels.ToList());
         }
 
-        // GET: Filieres/Details/5
+        // GET: Levels/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filiere filiere = db.Filieres.Find(id);
-            if (filiere == null)
+            Level level = db.Levels.Find(id);
+            if (level == null)
             {
                 return HttpNotFound();
             }
-            return View(filiere);
+            return View(level);
         }
 
-        // GET: Filieres/Create
+        // GET: Levels/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Filieres/Create
+        // POST: Levels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id_filiere,Nom_filiere")] Filiere filiere)
+        public ActionResult Create([Bind(Include = "Id_niveau,Nom_niveau")] Level level)
         {
             if (ModelState.IsValid)
             {
-                db.Filieres.Add(filiere);
+                db.Levels.Add(level);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(filiere);
+            return View(level);
         }
 
-        // GET: Filieres/Edit/5
+        // GET: Levels/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filiere filiere = db.Filieres.Find(id);
-            if (filiere == null)
+            Level level = db.Levels.Find(id);
+            if (level == null)
             {
                 return HttpNotFound();
             }
-            return View(filiere);
+            return View(level);
         }
 
-        // POST: Filieres/Edit/5
+        // POST: Levels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id_filiere,Nom_filiere")] Filiere filiere)
+        public ActionResult Edit([Bind(Include = "Id_niveau,Nom_niveau")] Level level)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(filiere).State = EntityState.Modified;
+                db.Entry(level).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(filiere);
+            return View(level);
         }
 
-        // GET: Filieres/Delete/5
+        // GET: Levels/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filiere filiere = db.Filieres.Find(id);
-            if (filiere == null)
+            Level level = db.Levels.Find(id);
+            if (level == null)
             {
                 return HttpNotFound();
             }
-            return View(filiere);
+            return View(level);
         }
 
-        // POST: Filieres/Delete/5
+        // POST: Levels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Filiere filiere = db.Filieres.Find(id);
-            db.Filieres.Remove(filiere);
+            Level level = db.Levels.Find(id);
+            db.Levels.Remove(level);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -129,7 +129,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Cne" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Niveau" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Id_fil" Type="Int32" Nullable="false" />
     <Property Name="Id_niv" Type="Int32" Nullable="false" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Students__UserId__6E01572D" FromRole="Students" ToRole="AspNetUsers" />
@@ -157,6 +156,16 @@
     <Property Name="Id_student" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Groupe" Relationship="Self.FK__Students___Id_gr__70DDC3D8" FromRole="Students_Groupes" ToRole="Groupes" />
     <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__71D1E811" FromRole="Students_Groupes" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <Association Name="FK__ArchivedR__Id_fi__6383C8BA">
     <End Role="Filieres" Type="Self.Filiere" Multiplicity="1" />
@@ -348,6 +357,7 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <AssociationSet Name="FK__ArchivedR__Id_fi__6383C8BA" Association="Self.FK__ArchivedR__Id_fi__6383C8BA">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />

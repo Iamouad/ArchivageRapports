@@ -24,7 +24,6 @@ namespace realMiniProjet.Models.Entities
         public int Id { get; set; }
         public string UserId { get; set; }
         public string Cne { get; set; }
-        public string Niveau { get; set; }
         public int Id_fil { get; set; }
         public int Id_niv { get; set; }
     
