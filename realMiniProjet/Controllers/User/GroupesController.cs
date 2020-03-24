@@ -48,7 +48,7 @@ namespace realMiniProjet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe)
+        public ActionResult Create([Bind(Include = "Id,Id_prof,Id_fil,Id_level")] Groupe groupe)
         {
             if (ModelState.IsValid)
             {

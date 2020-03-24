@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using realMiniProjet.Models.Entities
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -17,8 +18,15 @@ else
 {
 <ul class="nav navbar-nav navbar-right">
 
-   
-        <li>@Html.ActionLink("Register ", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>   
+    @{
+        Entities entities = new Entities();
+        AspNetUser aspNetUser = entities.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("ADMIN")).FirstOrDefault();
+
+    }
+    @if (aspNetUser == null)
+    {
+        <li>@Html.ActionLink("Admin registration ", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    }
     <li>@Html.ActionLink("Log in ", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
 
 </ul>

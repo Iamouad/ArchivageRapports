@@ -96,7 +96,7 @@ namespace realMiniProjet.Controllers.Admin
                 
                 user.PhoneNumber = aspNetUser.PhoneNumber;
                 user.Email = aspNetUser.Email;
-                user.UserName = user.Email;
+                user.UserName = aspNetUser.UserName;
                 
                 var result = await UserManager.CreateAsync(user, aspNetUser.PasswordHash);
 

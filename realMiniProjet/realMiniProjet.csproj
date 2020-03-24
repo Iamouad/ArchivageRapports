@@ -235,7 +235,6 @@
     <Compile Include="Controllers\Admin\HandlingProfessorsController.cs" />
     <Compile Include="Controllers\Admin\HandlingStudentsController.cs" />
     <Compile Include="Controllers\Admin\LevelsController.cs" />
-    <Compile Include="Controllers\Admin\Students_GroupesController.cs" />
     <Compile Include="Controllers\User\GroupesController.cs" />
     <Compile Include="Controllers\User\HomeController.cs" />
     <Compile Include="Controllers\User\ManageController.cs" />
@@ -384,7 +383,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\test.cshtml" />
     <Content Include="Views\Admin\Profil.cshtml" />
-    <Content Include="Views\Professor\test.cshtml" />
     <Content Include="Views\Filieres\Create.cshtml" />
     <Content Include="Views\Filieres\Delete.cshtml" />
     <Content Include="Views\Filieres\Details.cshtml" />
@@ -400,11 +398,6 @@
     <Content Include="Views\HandlingStudents\Details.cshtml" />
     <Content Include="Views\HandlingStudents\Edit.cshtml" />
     <Content Include="Views\HandlingStudents\Index.cshtml" />
-    <Content Include="Views\Students_Groupes\Create.cshtml" />
-    <Content Include="Views\Students_Groupes\Delete.cshtml" />
-    <Content Include="Views\Students_Groupes\Details.cshtml" />
-    <Content Include="Views\Students_Groupes\Edit.cshtml" />
-    <Content Include="Views\Students_Groupes\Index.cshtml" />
     <Content Include="Views\HandlingGroupes\Create.cshtml" />
     <Content Include="Views\HandlingGroupes\Delete.cshtml" />
     <Content Include="Views\HandlingGroupes\Details.cshtml" />
@@ -417,6 +410,7 @@
     <Content Include="Views\HandlingProfessors\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Professor\groups.cshtml" />
+    <Content Include="Views\Professor\profil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,13 +18,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Login", "Account")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("ADMIN"))
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Students", "Index", "HandlingStudents")</li>
+                            <li>@Html.ActionLink("Professors", "Index", "HandlingProfessors")</li>
+                            <li>@Html.ActionLink("Groupes", "Index", "HandlingGroupes")</li>
+                            <li>@Html.ActionLink("Library", "Index", "LibraryController")</li>
+                        }
+                        else if (User.IsInRole("PROFESSOR"))
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Professor")</li>
+                            <li>@Html.ActionLink("My groups", "MyGroups", "Professor")</li>
+                            <li>@Html.ActionLink("Library", "Index", "LibraryController")</li>
+                           
+                        }
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

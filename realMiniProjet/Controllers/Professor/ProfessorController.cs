@@ -17,19 +17,14 @@ namespace realMiniProjet.Controllers.Professor
         // GET: Professor
         public ActionResult Index()
         {
-            return View("test");
+            return View("profil");
         }
 
-        public ActionResult GetGroups()
+        public ActionResult MyGroups()
         {
             
             String id = User.Identity.GetUserId();
             var groupes = db.Groupes.Include(grp => grp.Filiere).Include(grp => grp.Level).Include(grp => grp.Reports);
-            //var students = db.Students.Include(s => s.AspNetUser).Include(s => s.Filiere).Include(s => s.Level);
-
-            ViewData["id"] = id;
-            /*ViewBag.filieres = new SelectList(db.Filieres, "Id_filiere", "Nom_filiere");
-            ViewBag.niveaux = new SelectList(db.Levels, "Id_niveau", "Nom_niveau");*/
             return View("groups", groupes.Where(grp => grp.Id_prof.Equals(id)).ToList());
         }
 
