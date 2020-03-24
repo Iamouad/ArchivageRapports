@@ -19,12 +19,12 @@
     <Property Name="Id_filiere" Type="Int32" Nullable="false" />
     <Property Name="RemarqueProf" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ReportPath" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="DateUniv" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateUniv" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Likes" Type="Int32" />
     <Property Name="Sujet" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Filiere" Relationship="Self.FK__ArchivedR__Id_fi__6383C8BA" FromRole="ArchivedReports" ToRole="Filieres" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__ArchivedR__Id_pr__6477ECF3" FromRole="ArchivedReports" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Students_ArchivedReport" Relationship="Self.FK__Students___Id_ar__6EF57B66" FromRole="ArchivedReports" ToRole="Students_ArchivedReport" />
+    <NavigationProperty Name="Students_ArchivedReport" Relationship="Self.FK__Students___Id_ar__71D1E811" FromRole="ArchivedReports" ToRole="Students_ArchivedReport" />
   </EntityType>
   <EntityType Name="AspNetRole">
     <Key>
@@ -77,8 +77,8 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="Groupes" Relationship="Self.FK__Groupes__Id_prof__693CA210" FromRole="AspNetUsers" ToRole="Groupes" />
-    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__Id_prof__6B24EA82" FromRole="AspNetUsers" ToRole="Reports" />
-    <NavigationProperty Name="Students" Relationship="Self.FK__Students__UserId__6E01572D" FromRole="AspNetUsers" ToRole="Students" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__Id_prof__6E01572D" FromRole="AspNetUsers" ToRole="Reports" />
+    <NavigationProperty Name="Students" Relationship="Self.FK__Students__UserId__70DDC3D8" FromRole="AspNetUsers" ToRole="Students" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
   </EntityType>
   <EntityType Name="Filiere">
@@ -88,8 +88,9 @@
     <Property Name="Id_filiere" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nom_filiere" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="ArchivedReports" Relationship="Self.FK__ArchivedR__Id_fi__6383C8BA" FromRole="Filieres" ToRole="ArchivedReports" />
-    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__Id_fili__6A30C649" FromRole="Filieres" ToRole="Reports" />
-    <NavigationProperty Name="Students" Relationship="Self.FK__Students__Id_fil__6C190EBB" FromRole="Filieres" ToRole="Students" />
+    <NavigationProperty Name="Groupes" Relationship="Self.FK__Groupes__Id_fil__6A30C649" FromRole="Filieres" ToRole="Groupes" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__Id_fili__6C190EBB" FromRole="Filieres" ToRole="Reports" />
+    <NavigationProperty Name="Students" Relationship="Self.FK__Students__Id_fil__6EF57B66" FromRole="Filieres" ToRole="Students" />
   </EntityType>
   <EntityType Name="Groupe">
     <Key>
@@ -97,9 +98,14 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Id_prof" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Id_fil" Type="Int32" Nullable="false" />
+    <Property Name="Id_niv" Type="Int32" Nullable="false" />
     <Property Name="Delais" Type="DateTime" Precision="3" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Groupes__Id_prof__693CA210" FromRole="Groupes" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Students_Groupes" Relationship="Self.FK__Students___Id_gr__70DDC3D8" FromRole="Groupes" ToRole="Students_Groupes" />
+    <NavigationProperty Name="Filiere" Relationship="Self.FK__Groupes__Id_fil__6A30C649" FromRole="Groupes" ToRole="Filieres" />
+    <NavigationProperty Name="Level" Relationship="Self.FK__Groupes__Id_niv__6B24EA82" FromRole="Groupes" ToRole="Levels" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__Id_grp__6D0D32F4" FromRole="Groupes" ToRole="Reports" />
+    <NavigationProperty Name="Students_Groupes" Relationship="Self.FK__Students___Id_gr__73BA3083" FromRole="Groupes" ToRole="Students_Groupes" />
   </EntityType>
   <EntityType Name="Level">
     <Key>
@@ -107,7 +113,8 @@
     </Key>
     <Property Name="Id_niveau" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nom_niveau" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Students" Relationship="Self.FK__Students__Id_niv__6D0D32F4" FromRole="Levels" ToRole="Students" />
+    <NavigationProperty Name="Groupes" Relationship="Self.FK__Groupes__Id_niv__6B24EA82" FromRole="Levels" ToRole="Groupes" />
+    <NavigationProperty Name="Students" Relationship="Self.FK__Students__Id_niv__6FE99F9F" FromRole="Levels" ToRole="Students" />
   </EntityType>
   <EntityType Name="Report">
     <Key>
@@ -116,11 +123,14 @@
     <Property Name="Id_report" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Id_prof" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Id_filiere" Type="Int32" Nullable="false" />
+    <Property Name="Id_grp" Type="Int32" Nullable="false" />
     <Property Name="ReportPath" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="DateUniv" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateUniv" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateDepot" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Sujet" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Reports__Id_prof__6B24EA82" FromRole="Reports" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Filiere" Relationship="Self.FK__Reports__Id_fili__6A30C649" FromRole="Reports" ToRole="Filieres" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Reports__Id_prof__6E01572D" FromRole="Reports" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Filiere" Relationship="Self.FK__Reports__Id_fili__6C190EBB" FromRole="Reports" ToRole="Filieres" />
+    <NavigationProperty Name="Groupe" Relationship="Self.FK__Reports__Id_grp__6D0D32F4" FromRole="Reports" ToRole="Groupes" />
   </EntityType>
   <EntityType Name="Student">
     <Key>
@@ -131,11 +141,11 @@
     <Property Name="Cne" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Id_fil" Type="Int32" Nullable="false" />
     <Property Name="Id_niv" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Students__UserId__6E01572D" FromRole="Students" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Filiere" Relationship="Self.FK__Students__Id_fil__6C190EBB" FromRole="Students" ToRole="Filieres" />
-    <NavigationProperty Name="Level" Relationship="Self.FK__Students__Id_niv__6D0D32F4" FromRole="Students" ToRole="Levels" />
-    <NavigationProperty Name="Students_ArchivedReport" Relationship="Self.FK__Students___Id_st__6FE99F9F" FromRole="Students" ToRole="Students_ArchivedReport" />
-    <NavigationProperty Name="Students_Groupes" Relationship="Self.FK__Students___Id_st__71D1E811" FromRole="Students" ToRole="Students_Groupes" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Students__UserId__70DDC3D8" FromRole="Students" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Filiere" Relationship="Self.FK__Students__Id_fil__6EF57B66" FromRole="Students" ToRole="Filieres" />
+    <NavigationProperty Name="Level" Relationship="Self.FK__Students__Id_niv__6FE99F9F" FromRole="Students" ToRole="Levels" />
+    <NavigationProperty Name="Students_ArchivedReport" Relationship="Self.FK__Students___Id_st__72C60C4A" FromRole="Students" ToRole="Students_ArchivedReport" />
+    <NavigationProperty Name="Students_Groupes" Relationship="Self.FK__Students___Id_st__74AE54BC" FromRole="Students" ToRole="Students_Groupes" />
   </EntityType>
   <EntityType Name="Students_ArchivedReport">
     <Key>
@@ -144,8 +154,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Id_student" Type="Int32" Nullable="false" />
     <Property Name="Id_archivedReport" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ArchivedReport" Relationship="Self.FK__Students___Id_ar__6EF57B66" FromRole="Students_ArchivedReport" ToRole="ArchivedReports" />
-    <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__6FE99F9F" FromRole="Students_ArchivedReport" ToRole="Students" />
+    <NavigationProperty Name="ArchivedReport" Relationship="Self.FK__Students___Id_ar__71D1E811" FromRole="Students_ArchivedReport" ToRole="ArchivedReports" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__72C60C4A" FromRole="Students_ArchivedReport" ToRole="Students" />
   </EntityType>
   <EntityType Name="Students_Groupes">
     <Key>
@@ -154,18 +164,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Id_groupe" Type="Int32" Nullable="false" />
     <Property Name="Id_student" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Groupe" Relationship="Self.FK__Students___Id_gr__70DDC3D8" FromRole="Students_Groupes" ToRole="Groupes" />
-    <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__71D1E811" FromRole="Students_Groupes" ToRole="Students" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Groupe" Relationship="Self.FK__Students___Id_gr__73BA3083" FromRole="Students_Groupes" ToRole="Groupes" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__74AE54BC" FromRole="Students_Groupes" ToRole="Students" />
   </EntityType>
   <Association Name="FK__ArchivedR__Id_fi__6383C8BA">
     <End Role="Filieres" Type="Self.Filiere" Multiplicity="1" />
@@ -191,7 +191,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_ar__6EF57B66">
+  <Association Name="FK__Students___Id_ar__71D1E811">
     <End Role="ArchivedReports" Type="Self.ArchivedReport" Multiplicity="1" />
     <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
     <ReferentialConstraint>
@@ -243,7 +243,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Id_prof__6B24EA82">
+  <Association Name="FK__Reports__Id_prof__6E01572D">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
     <End Role="Reports" Type="Self.Report" Multiplicity="*" />
     <ReferentialConstraint>
@@ -255,7 +255,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__UserId__6E01572D">
+  <Association Name="FK__Students__UserId__70DDC3D8">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
     <End Role="Students" Type="Self.Student" Multiplicity="*" />
     <ReferentialConstraint>
@@ -267,7 +267,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Id_fili__6A30C649">
+  <Association Name="FK__Groupes__Id_fil__6A30C649">
+    <End Role="Filieres" Type="Self.Filiere" Multiplicity="1" />
+    <End Role="Groupes" Type="Self.Groupe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Filieres">
+        <PropertyRef Name="Id_filiere" />
+      </Principal>
+      <Dependent Role="Groupes">
+        <PropertyRef Name="Id_fil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__Id_fili__6C190EBB">
     <End Role="Filieres" Type="Self.Filiere" Multiplicity="1" />
     <End Role="Reports" Type="Self.Report" Multiplicity="*" />
     <ReferentialConstraint>
@@ -279,7 +291,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__Id_fil__6C190EBB">
+  <Association Name="FK__Students__Id_fil__6EF57B66">
     <End Role="Filieres" Type="Self.Filiere" Multiplicity="1" />
     <End Role="Students" Type="Self.Student" Multiplicity="*" />
     <ReferentialConstraint>
@@ -291,7 +303,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_gr__70DDC3D8">
+  <Association Name="FK__Groupes__Id_niv__6B24EA82">
+    <End Role="Levels" Type="Self.Level" Multiplicity="1" />
+    <End Role="Groupes" Type="Self.Groupe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_niveau" />
+      </Principal>
+      <Dependent Role="Groupes">
+        <PropertyRef Name="Id_niv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__Id_grp__6D0D32F4">
+    <End Role="Groupes" Type="Self.Groupe" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groupes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Id_grp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_gr__73BA3083">
     <End Role="Groupes" Type="Self.Groupe" Multiplicity="1" />
     <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -303,7 +339,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__Id_niv__6D0D32F4">
+  <Association Name="FK__Students__Id_niv__6FE99F9F">
     <End Role="Levels" Type="Self.Level" Multiplicity="1" />
     <End Role="Students" Type="Self.Student" Multiplicity="*" />
     <ReferentialConstraint>
@@ -315,7 +351,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_st__6FE99F9F">
+  <Association Name="FK__Students___Id_st__72C60C4A">
     <End Role="Students" Type="Self.Student" Multiplicity="1" />
     <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
     <ReferentialConstraint>
@@ -327,7 +363,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_st__71D1E811">
+  <Association Name="FK__Students___Id_st__74AE54BC">
     <End Role="Students" Type="Self.Student" Multiplicity="1" />
     <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -357,7 +393,6 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <AssociationSet Name="FK__ArchivedR__Id_fi__6383C8BA" Association="Self.FK__ArchivedR__Id_fi__6383C8BA">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
@@ -366,7 +401,7 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_ar__6EF57B66" Association="Self.FK__Students___Id_ar__6EF57B66">
+    <AssociationSet Name="FK__Students___Id_ar__71D1E811" Association="Self.FK__Students___Id_ar__71D1E811">
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
       <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
     </AssociationSet>
@@ -382,35 +417,47 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Groupes" EntitySet="Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Id_prof__6B24EA82" Association="Self.FK__Reports__Id_prof__6B24EA82">
+    <AssociationSet Name="FK__Reports__Id_prof__6E01572D" Association="Self.FK__Reports__Id_prof__6E01572D">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__UserId__6E01572D" Association="Self.FK__Students__UserId__6E01572D">
+    <AssociationSet Name="FK__Students__UserId__70DDC3D8" Association="Self.FK__Students__UserId__70DDC3D8">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Id_fili__6A30C649" Association="Self.FK__Reports__Id_fili__6A30C649">
+    <AssociationSet Name="FK__Groupes__Id_fil__6A30C649" Association="Self.FK__Groupes__Id_fil__6A30C649">
+      <End Role="Filieres" EntitySet="Filieres" />
+      <End Role="Groupes" EntitySet="Groupes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__Id_fili__6C190EBB" Association="Self.FK__Reports__Id_fili__6C190EBB">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__Id_fil__6C190EBB" Association="Self.FK__Students__Id_fil__6C190EBB">
+    <AssociationSet Name="FK__Students__Id_fil__6EF57B66" Association="Self.FK__Students__Id_fil__6EF57B66">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_gr__70DDC3D8" Association="Self.FK__Students___Id_gr__70DDC3D8">
+    <AssociationSet Name="FK__Groupes__Id_niv__6B24EA82" Association="Self.FK__Groupes__Id_niv__6B24EA82">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Groupes" EntitySet="Groupes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__Id_grp__6D0D32F4" Association="Self.FK__Reports__Id_grp__6D0D32F4">
+      <End Role="Groupes" EntitySet="Groupes" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_gr__73BA3083" Association="Self.FK__Students___Id_gr__73BA3083">
       <End Role="Groupes" EntitySet="Groupes" />
       <End Role="Students_Groupes" EntitySet="Students_Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__Id_niv__6D0D32F4" Association="Self.FK__Students__Id_niv__6D0D32F4">
+    <AssociationSet Name="FK__Students__Id_niv__6FE99F9F" Association="Self.FK__Students__Id_niv__6FE99F9F">
       <End Role="Levels" EntitySet="Levels" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_st__6FE99F9F" Association="Self.FK__Students___Id_st__6FE99F9F">
+    <AssociationSet Name="FK__Students___Id_st__72C60C4A" Association="Self.FK__Students___Id_st__72C60C4A">
       <End Role="Students" EntitySet="Students" />
       <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_st__71D1E811" Association="Self.FK__Students___Id_st__71D1E811">
+    <AssociationSet Name="FK__Students___Id_st__74AE54BC" Association="Self.FK__Students___Id_st__74AE54BC">
       <End Role="Students" EntitySet="Students" />
       <End Role="Students_Groupes" EntitySet="Students_Groupes" />
     </AssociationSet>

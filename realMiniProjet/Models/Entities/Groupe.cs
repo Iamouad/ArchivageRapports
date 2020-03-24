@@ -23,7 +23,6 @@ namespace realMiniProjet.Models.Entities
     
         public int Id { get; set; }
         public string Id_prof { get; set; }
-        public int Id_rep { get; set; }
         public int Id_fil { get; set; }
         public int Id_niv { get; set; }
         public Nullable<System.DateTime> Delais { get; set; }
@@ -31,7 +30,6 @@ namespace realMiniProjet.Models.Entities
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Filiere Filiere { get; set; }
         public virtual Level Level { get; set; }
-        public virtual Report Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Report> Reports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

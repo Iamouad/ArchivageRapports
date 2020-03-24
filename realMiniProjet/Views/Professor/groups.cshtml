@@ -2,8 +2,7 @@
 
 @Scripts.Render("~/toutjquery")
 
-@using (Html.BeginForm())
-{
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -11,53 +10,49 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.Label("Filiere", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("filiere", ViewBag.filieres as SelectList, "Selectionnez une filière", htmlAttributes: new { @class = "form-control", @id = "id_fil" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Niveau", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("niveau", ViewBag.niveaux as SelectList, "Selectionnez un niveau", htmlAttributes: new { @class = "form-control", @id = "id_niv" })
-            </div>
-        </div>
 
         <div>
             <table id="tblGrps" class="table table-bordered table-striped table-responsive table-hover">
                 <thead>
                     <tr>
+                        <th align="left" class="productth">Classe</th>
                         <th align="left" class="productth">Members</th>
                         <th align="left" class="productth"></th>
                         <th align="left" class="productth">Délai</th>
                         <th align="left" class="productth">Rapport</th>
                         <th align="left" class="productth">Sujet</th>
-
+                        <th align="left" class="productth">Date de dépot</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in @Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DropDownList("members", null, htmlAttributes: new { @class = "form-control", @id = "members" } )
-                        </td>
-                        <td>
-                            <button class="btn-sm btn-info">Show members</button>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Delais)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Report.Id_report)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Report.Sujet)
-                        </td>
+                        String classe = item.Level.Nom_niveau + " " + item.Filiere.Nom_filiere;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => classe)
+                            </td>
+                            <td>
+                                @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
 
-                    </tr>
+                            </td>
+                            <td>
+                                <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Delais)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Id_report)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
+                            </td>
+
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -74,54 +69,42 @@
 
     @section Scripts{
         <script type="text/javascript">
-            function LoadData() {
-                var idFil = $('#id_fil').val();
-                var idLev = $('#id_lev').val();
-                console.log("loading data.....");
-                $("#tblGrps tbody tr").remove();
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("getStudents")',
-                    dataType: "json",
-                    data: { id_f: idFil, id_l: idLev },
-                    success: function (data) {
+        function showMembers(idGrp) {
+            console.log("wooooooooow");
+            var idList = 'grp' + idGrp;
+            var select = document.getElementById(idList);
+            //select.find('option').remove().end();
+            console.log(select);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("getMembers", "HandlingGroupes")',
+                dataType: "json",
+                data: { id: idGrp },
+                success: function (data) {
                 var items = '';
-                $.each(data, function (i, item) {
-                    var rows = "<tr>"
-                    + "<td class='prtoducttd'>" + item.Cne + "</td>"
-                    + "<td class='prtoducttd'>" + item.FirstName + "</td>"
-                    + "<td class='prtoducttd'>" + item.LastName + "</td>"
-                    + "<td class='prtoducttd'>" + item.Email + "</td>"
-                    + "<td class='prtoducttd'>"+"<input type='checkbox' name ='stdid' value= "+'std' + item.Id + " /> "+ "</td>"
-                    + "</tr>";
-                    $('#tblStudent tbody').append(rows);
-                        });
-                    },
-                    error: function (ex) {
-                        var r = jQuery.parseJSON(response.responseText);
-                        alert("Message: " + r.Message);
-                        alert("StackTrace: " + r.StackTrace);
-                        alert("ExceptionType: " + r.ExceptionType);
-                    }
-                });
-                return false;
-            }
-            function print(s) {
-                console.log("hhhhhhhhhhhhhhhhhhh"+s);
-            }
+                console.log("successsssss");
 
-            $("#id_fil").on("change", function () {
-               // print("mm");
-                LoadData();
-            });
-            $("#id_lev").on("change", function () {
-                //console.log("chaggggggggggggggggg lev" + $(this).val());
-                LoadData();
-            });
 
+                    $.each(data, function (index, item) {
+                    var o = new Option(item.FirstName, item.FirstName);
+                    /// jquerify the DOM object 'o' so we can use the html method
+                        $(o).html(item.FirstName+" "+item.LastName);
+                        select.append(o);
+                        console.log(item.FirstName)
+                        //select.append($("<option>").val(item.FirstName).text(item.FirstName));
+                    });
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("errrrrr");
+                }
+            });
+        }
         </script>
     }
-}
+
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

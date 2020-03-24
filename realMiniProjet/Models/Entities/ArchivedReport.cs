@@ -25,7 +25,7 @@ namespace realMiniProjet.Models.Entities
         public int Id_filiere { get; set; }
         public string RemarqueProf { get; set; }
         public string ReportPath { get; set; }
-        public System.DateTime DateUniv { get; set; }
+        public string DateUniv { get; set; }
         public Nullable<int> Likes { get; set; }
         public string Sujet { get; set; }
     

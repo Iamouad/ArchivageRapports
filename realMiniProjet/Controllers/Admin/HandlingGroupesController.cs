@@ -68,6 +68,8 @@ namespace realMiniProjet.Controllers.Admin
             }
             if (ModelState.IsValid)
             {
+                groupe.Id_fil = id_f;
+                groupe.Id_niv = id_l;
                 db.Groupes.Add(groupe);
 
                 students = db.Students.Where(std => std.Filiere.Id_filiere == id_f && std.Level.Id_niveau == id_l).ToList();
