@@ -85,7 +85,7 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Email,PasswordHash,PhoneNumber,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        public async Task<ActionResult> Create([Bind(Include = "Email,PasswordHash,PhoneNumber,FirstName,LastName")] AspNetUser aspNetUser)
         {
           
            
@@ -96,7 +96,7 @@ namespace realMiniProjet.Controllers.Admin
                 
                 user.PhoneNumber = aspNetUser.PhoneNumber;
                 user.Email = aspNetUser.Email;
-                user.UserName = aspNetUser.UserName;
+                user.UserName = aspNetUser.Email;
                 
                 var result = await UserManager.CreateAsync(user, aspNetUser.PasswordHash);
 
@@ -138,10 +138,11 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,PhoneNumber,FirstName,LastName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
+                aspNetUser.UserName = aspNetUser.Email;
                 db.Entry(aspNetUser).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

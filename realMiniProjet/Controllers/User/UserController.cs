@@ -16,24 +16,15 @@ namespace realMiniProjet.Controllers
 
         public ActionResult Index()
         {
-            String id = User.Identity.GetUserId();
-            Entities entities = new Entities();
-            AspNetUser user = entities.AspNetUsers.Find(id);
-            if(user.AspNetRoles != null)
-            {
-                switch (user.AspNetRoles.FirstOrDefault().Name)
-                {
-                    case "ADMIN":
-                        return RedirectToAction("Index", "Admin");
-                    case "PROFESSOR":
-                        return RedirectToAction("Index", "Professor");
-                    case "STUDENT":
-                        return RedirectToAction("Index", "Student");
-                    default:
-                        return RedirectToAction("Login", "Account");
-                }
-            }
-            return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("ADMIN"))
+                return RedirectToAction("Index", "Admin");
+            else if (User.IsInRole("PROFESSOR"))
+                return RedirectToAction("Index", "Professor");
+            else if (User.IsInRole("STUDENT"))
+                return RedirectToAction("Index", "Student");
+            else
+                return RedirectToAction("Login", "Account");
         }
     }
 }

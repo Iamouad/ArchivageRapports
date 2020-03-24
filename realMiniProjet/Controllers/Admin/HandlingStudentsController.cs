@@ -91,14 +91,15 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Cne,Id_fil,Id_niv")] Student student, string userName, string firstName, string lastName, string Email, string Password)
+        public ActionResult Create([Bind(Include = "Id,Cne,Id_fil,Id_niv")] Student student, string firstName, string lastName, string Email, string Password, string phone)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser();
 
                 user.Email = Email;
-                user.UserName = userName;
+                user.UserName = Email;
+                user.PhoneNumber = phone;
 
                 var result =  UserManager.Create(user, Password);
                 if (result.Succeeded)
@@ -137,7 +138,6 @@ namespace realMiniProjet.Controllers.Admin
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
             ViewBag.Id_fil = new SelectList(db.Filieres, "Id_filiere", "Nom_filiere", student.Id_fil);
             ViewBag.Id_niv = new SelectList(db.Levels, "Id_niveau", "Nom_niveau", student.Id_niv);
             return View(student);
@@ -148,29 +148,18 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,Cne,Id_fil,Id_niv")] Student student, string userName, string firstName, string lastName, string Email, string Password)
+        public ActionResult Edit([Bind(Include = "Id,Cne,Id_fil,Id_niv")] Student student, string firstName, string lastName, string Email)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
-                db.SaveChanges();
-                AspNetUser modifiedUser = db.AspNetUsers.Find(student.UserId);
-                if (!modifiedUser.LastName.Equals(lastName))
-                {
-                    modifiedUser.LastName = lastName;
-                }
-                if (!modifiedUser.FirstName.Equals(firstName))
-                {
-                    modifiedUser.FirstName = firstName;
-                }
-                if (!modifiedUser.Email.Equals(Email))
-                {
-                    modifiedUser.Email = Email;
-                }
-                if (!Crypto.VerifyHashedPassword(modifiedUser.PasswordHash ,Password))
-                {
-                    modifiedUser.PasswordHash = Crypto.HashPassword(Password);
-                }
+                
+                Student student1 = db.Students.Find(student.Id);
+                AspNetUser modifiedUser = db.AspNetUsers.Find(student1.UserId);
+                student1 = student;
+                modifiedUser.LastName = lastName;             
+                modifiedUser.FirstName = firstName;
+                modifiedUser.Email = Email;
+                modifiedUser.UserName = Email;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

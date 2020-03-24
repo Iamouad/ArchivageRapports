@@ -82,7 +82,10 @@ namespace realMiniProjet.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "User");
+                    {
+                        return RedirectToAction("Index", "User");
+
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
