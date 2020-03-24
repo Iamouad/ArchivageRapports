@@ -7,14 +7,53 @@ using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using realMiniProjet.Models;
 using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
-    [Authorize(Roles ="ADMIN")]
     public class HandlingStudentsController : Controller
     {
         private Entities db = new Entities();
+        
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public HandlingStudentsController()
+        {
+        }
+
+        public HandlingStudentsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: HandlingStudents
         public ActionResult Index()
@@ -52,29 +91,32 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Cne,Id_fil,Id_niv")] Student student, string userName, string firstNAme, string lastName, string Email, string Password)
+        public ActionResult Create([Bind(Include = "Id,Cne,Id_fil,Id_niv")] Student student, string userName, string firstName, string lastName, string Email, string Password)
         {
             if (ModelState.IsValid)
             {
-                AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("STUDENT")).FirstOrDefault();
-                Random random = new Random();
-                int id = random.Next(1, 1000);
+                ApplicationUser user = new ApplicationUser();
 
-                AspNetUser aspNetUser = new AspNetUser
+                user.Email = Email;
+                user.UserName = userName;
+
+                var result =  UserManager.Create(user, Password);
+                if (result.Succeeded)
                 {
-                    Email = Email,
-                    FirstName = firstNAme,
-                    LastName = lastName,
-                    Id = Crypto.Hash("user" + id),
-                    PasswordHash = Crypto.HashPassword(Password),
-                    UserName = userName
-                };
-                db.AspNetUsers.Add(aspNetUser);
-                aspNetUser.AspNetRoles.Add(role);
-                student.UserId = aspNetUser.Id;
-                db.Students.Add(student);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("STUDENT")).FirstOrDefault();
+ 
+                    AspNetUser aspNetUser = db.AspNetUsers.Find(user.Id);
+                    aspNetUser.FirstName = firstName;
+                    aspNetUser.LastName = lastName;
+                    aspNetUser.AspNetRoles.Add(role);
+                    student.UserId = aspNetUser.Id;
+                    db.Students.Add(student);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
+
+
             }
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
@@ -161,6 +203,7 @@ namespace realMiniProjet.Controllers.Admin
         {
             Student student = db.Students.Find(id);
             AspNetUser aspNetUser = db.AspNetUsers.Find(student.UserId);
+            
             db.Students.Remove(student);          
             db.AspNetUsers.Remove(aspNetUser);
             db.SaveChanges();

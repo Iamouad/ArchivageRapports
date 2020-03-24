@@ -3,39 +3,70 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Helpers;
 using realMiniProjet.Models.Entities;
+using Microsoft.AspNet.Identity.Owin;
+using realMiniProjet.Models;
 
 namespace realMiniProjet.Controllers.Admin
 {
-    [Authorize(Roles ="ADMIN")]
     public class HandlingProfessorsController : Controller
     {
         private Entities db = new Entities();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
 
-        // GET: HandlingProfessors
-        public ActionResult Index()
+        public HandlingProfessorsController()
         {
-            //AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("PROFESSOR")).FirstOrDefault();
-
-            return View(db.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("PROFESSOR")).ToList());
-
-
-
-
         }
 
-        // GET: HandlingProfessors/Details/
-        public ActionResult Details(string id)
+        public HandlingProfessorsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        // GET: HandlingProfessors
+        public async Task<ActionResult> Index()
+        {
+            return View(await db.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("PROFESSOR")).ToListAsync());
+        }
+
+        // GET: HandlingProfessors/Details/5
+        public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -54,33 +85,47 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email,PasswordHash,PhoneNumber,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        public async Task<ActionResult> Create([Bind(Include = "Email,PasswordHash,PhoneNumber,UserName,FirstName,LastName")] AspNetUser aspNetUser)
         {
+          
+           
             if (ModelState.IsValid)
             {
-               
-                AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("PROFESSOR")).FirstOrDefault();
-                Random random = new Random();
-                int id = random.Next(1, 1000);
-                aspNetUser.Id = Crypto.Hash("user" + id);
-                aspNetUser.PasswordHash = Crypto.HashPassword(aspNetUser.PasswordHash);
-                db.AspNetUsers.Add(aspNetUser);
-                aspNetUser.AspNetRoles.Add(role);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // AspNetUser user1 = new AspNetUser();
+                ApplicationUser user = new ApplicationUser();
+                
+                user.PhoneNumber = aspNetUser.PhoneNumber;
+                user.Email = aspNetUser.Email;
+                user.UserName = user.Email;
+                
+                var result = await UserManager.CreateAsync(user, aspNetUser.PasswordHash);
+
+                //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                if (result.Succeeded)
+                {
+                    AspNetRole role = db.AspNetRoles.Where(rl => rl.Name.Equals("PROFESSOR")).FirstOrDefault();
+                    AspNetUser userInfo = db.AspNetUsers.Find(user.Id);
+                    userInfo.FirstName = aspNetUser.FirstName;
+                    userInfo.LastName = aspNetUser.LastName;
+                    userInfo.AspNetRoles.Add(role);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+
+                }
+                
             }
 
             return View(aspNetUser);
         }
 
         // GET: HandlingProfessors/Edit/5
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -93,25 +138,25 @@ namespace realMiniProjet.Controllers.Admin
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FirstName,LastName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(aspNetUser).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(aspNetUser);
         }
 
         // GET: HandlingProfessors/Delete/5
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -122,11 +167,11 @@ namespace realMiniProjet.Controllers.Admin
         // POST: HandlingProfessors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
             db.AspNetUsers.Remove(aspNetUser);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

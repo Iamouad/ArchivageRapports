@@ -14,14 +14,25 @@ namespace realMiniProjet.Models.Entities
     
     public partial class Report
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Report()
+        {
+            this.Groupes = new HashSet<Groupe>();
+        }
+    
         public int Id_report { get; set; }
         public string Id_prof { get; set; }
         public int Id_filiere { get; set; }
+        public int Id_grp { get; set; }
         public string ReportPath { get; set; }
         public System.DateTime DateUniv { get; set; }
+        public System.DateTime DateDepot { get; set; }
         public string Sujet { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Filiere Filiere { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Groupe> Groupes { get; set; }
+        public virtual Groupe Groupe { get; set; }
     }
 }

@@ -1,0 +1,128 @@
+﻿@model List<realMiniProjet.Models.Entities.Groupe>
+
+@Scripts.Render("~/toutjquery")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h1>Mes groupes</h1>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Filiere", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("filiere", ViewBag.filieres as SelectList, "Selectionnez une filière", htmlAttributes: new { @class = "form-control", @id = "id_fil" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Niveau", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("niveau", ViewBag.niveaux as SelectList, "Selectionnez un niveau", htmlAttributes: new { @class = "form-control", @id = "id_niv" })
+            </div>
+        </div>
+
+        <div>
+            <table id="tblGrps" class="table table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th align="left" class="productth">Members</th>
+                        <th align="left" class="productth"></th>
+                        <th align="left" class="productth">Délai</th>
+                        <th align="left" class="productth">Rapport</th>
+                        <th align="left" class="productth">Sujet</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DropDownList("members", null, htmlAttributes: new { @class = "form-control", @id = "members" } )
+                        </td>
+                        <td>
+                            <button class="btn-sm btn-info">Show members</button>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Delais)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Report.Id_report)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Report.Sujet)
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script type="text/javascript">
+            function LoadData() {
+                var idFil = $('#id_fil').val();
+                var idLev = $('#id_lev').val();
+                console.log("loading data.....");
+                $("#tblGrps tbody tr").remove();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("getStudents")',
+                    dataType: "json",
+                    data: { id_f: idFil, id_l: idLev },
+                    success: function (data) {
+                var items = '';
+                $.each(data, function (i, item) {
+                    var rows = "<tr>"
+                    + "<td class='prtoducttd'>" + item.Cne + "</td>"
+                    + "<td class='prtoducttd'>" + item.FirstName + "</td>"
+                    + "<td class='prtoducttd'>" + item.LastName + "</td>"
+                    + "<td class='prtoducttd'>" + item.Email + "</td>"
+                    + "<td class='prtoducttd'>"+"<input type='checkbox' name ='stdid' value= "+'std' + item.Id + " /> "+ "</td>"
+                    + "</tr>";
+                    $('#tblStudent tbody').append(rows);
+                        });
+                    },
+                    error: function (ex) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                        alert("StackTrace: " + r.StackTrace);
+                        alert("ExceptionType: " + r.ExceptionType);
+                    }
+                });
+                return false;
+            }
+            function print(s) {
+                console.log("hhhhhhhhhhhhhhhhhhh"+s);
+            }
+
+            $("#id_fil").on("change", function () {
+               // print("mm");
+                LoadData();
+            });
+            $("#id_lev").on("change", function () {
+                //console.log("chaggggggggggggggggg lev" + $(this).val());
+                LoadData();
+            });
+
+        </script>
+    }
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

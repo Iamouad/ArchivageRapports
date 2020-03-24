@@ -18,6 +18,7 @@ namespace realMiniProjet.Models.Entities
         public Filiere()
         {
             this.ArchivedReports = new HashSet<ArchivedReport>();
+            this.Groupes = new HashSet<Groupe>();
             this.Reports = new HashSet<Report>();
             this.Students = new HashSet<Student>();
         }
@@ -27,6 +28,8 @@ namespace realMiniProjet.Models.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArchivedReport> ArchivedReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Groupe> Groupes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Report> Reports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
