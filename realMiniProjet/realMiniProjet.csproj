@@ -227,6 +227,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\Admin\TypeReportsController.cs" />
     <Compile Include="Controllers\Etudiant\StudentController.cs" />
     <Compile Include="Controllers\User\AccountController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
@@ -301,6 +302,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Students_Groupes.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Type_Reports.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -409,8 +416,13 @@
     <Content Include="Views\HandlingProfessors\Edit.cshtml" />
     <Content Include="Views\HandlingProfessors\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Professor\groups.cshtml" />
+    <Content Include="Views\User\groups.cshtml" />
     <Content Include="Views\Professor\profil.cshtml" />
+    <Content Include="Views\TypeReports\Create.cshtml" />
+    <Content Include="Views\TypeReports\Delete.cshtml" />
+    <Content Include="Views\TypeReports\Details.cshtml" />
+    <Content Include="Views\TypeReports\Edit.cshtml" />
+    <Content Include="Views\TypeReports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using realMiniProjet.Models;
@@ -161,20 +162,24 @@ namespace realMiniProjet.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var role = entities.AspNetRoles.Where(rl => rl.Name.Equals("ADMIN")).FirstOrDefault();
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password) ;
+                
                 if (result.Succeeded)
                 {
-                   // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                   /* string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");*/
+                    /* string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                      var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                      await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");*/
 
-                    await UserManager.AddToRolesAsync("ADMIN");
-                    
+                    AspNetUser aspNetUser = entities.AspNetUsers.Find(user.Id);
+                    aspNetUser.AspNetRoles.Add(role);
+                    entities.SaveChanges();
                     return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);

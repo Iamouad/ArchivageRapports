@@ -13,6 +13,8 @@ using realMiniProjet.Models;
 
 namespace realMiniProjet.Controllers.Admin
 {
+    [Authorize(Roles = "ADMIN")]
+
     public class HandlingProfessorsController : Controller
     {
         private Entities db = new Entities();

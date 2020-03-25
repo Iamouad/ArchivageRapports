@@ -22,15 +22,19 @@ namespace realMiniProjet.Models.Entities
     
         public int Id_report { get; set; }
         public string Id_prof { get; set; }
+        public int Id_type { get; set; }
+        public int Id_niv { get; set; }
         public int Id_filiere { get; set; }
+        public int Id_niveau { get; set; }
         public string RemarqueProf { get; set; }
         public string ReportPath { get; set; }
-        public string DateUniv { get; set; }
-        public Nullable<int> Likes { get; set; }
+        public System.DateTime DateUniv { get; set; }
         public string Sujet { get; set; }
     
         public virtual Filiere Filiere { get; set; }
+        public virtual Level Level { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Type_Reports Type_Reports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Students_ArchivedReport> Students_ArchivedReport { get; set; }
     }

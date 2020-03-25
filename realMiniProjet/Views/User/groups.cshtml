@@ -1,11 +1,12 @@
 ﻿@model List<realMiniProjet.Models.Entities.Groupe>
+@using realMiniProjet.Models.Entities
 
 @Scripts.Render("~/toutjquery")
 
 
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="container-fluid">
         <h1>Mes groupes</h1>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -16,55 +17,83 @@
                 <thead>
                     <tr>
                         <th align="left" class="productth">Classe</th>
+                        @if (User.IsInRole("STUDENT"))
+                        {
+                            <th align="left" class="productth">Encadrant</th>
+                        }
                         <th align="left" class="productth">Members</th>
                         <th align="left" class="productth"></th>
-                        <th align="left" class="productth">Délai</th>
-                        <th align="left" class="productth">Rapport</th>
                         <th align="left" class="productth">Sujet</th>
-                        <th align="left" class="productth">Date de dépot</th>
+                        <th align="left" class="productth">Rapport</th>
+                        @if (User.IsInRole("PROFESSOR"))
+                        {
+                            <th align="left" class="productth">Date de dépot</th>
+                        }
+
+
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in @Model)
                     {
-                        String classe = item.Level.Nom_niveau + " " + item.Filiere.Nom_filiere;
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => classe)
-                            </td>
-                            <td>
-                                @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
+                        String classeName = item.Level.Nom_niveau + " " + item.Filiere.Nom_filiere;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => classeName)
+                        </td>
+                        @if (User.IsInRole("STUDENT"))
+                        {
+                            Entities entities = new Entities();
+                            AspNetUser enc = entities.AspNetUsers.Find(item.Id_prof);
+                            string encName = enc.FirstName + " " + enc.LastName;
 
-                            </td>
                             <td>
-                                <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
+                                @encName
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Delais)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Id_report)
-                            </td>
-                            <td>
+                        }
+                        <td class="col-md-2">
+                            @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
+
+                        </td>
+                        <td>
+                            <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
+                        </td>
+                        @if (!String.IsNullOrWhiteSpace(item.Reports.FirstOrDefault().Sujet))
+                        {
+                            <td class="col-md-4">
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
                             </td>
+                        }
+
+                        @if (User.IsInRole("PROFESSOR"))
+                        {
+                            <td>
+                                @Html.ActionLink("Download", "GetReport", new { reportId = item.Reports.FirstOrDefault().Id_report })
+                            </td>
+                        }
+                        @if (User.IsInRole("STUDENT"))
+                        {
+                            <td>
+                                @Html.ActionLink("UPLOAD", "GetReport", new { reportId = item.Reports.FirstOrDefault().Id_report })
+                            </td>
+                        }
+
+
+                        @if (User.IsInRole("PROFESSOR"))
+                        {
                             <td>
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
                             </td>
+                        }
 
-                        </tr>
+
+
+                    </tr>
                     }
                 </tbody>
             </table>
         </div>
 
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 
     @section Scripts{

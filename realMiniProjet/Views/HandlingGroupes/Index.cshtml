@@ -14,7 +14,7 @@
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            @Html.DisplayName("Email Encadrant")
         </th>
 
         <th>
@@ -22,11 +22,6 @@
         </th>
 
         <th>
-        </th>
-
-
-        <th>
-            @Html.DisplayNameFor(model => model.Delais)
         </th>
 
         <th>
@@ -51,10 +46,7 @@
         <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
 
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Delais)
-    </td>
-
+    
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
         @Html.ActionLink("Details", "Details", new { id = item.Id }) |

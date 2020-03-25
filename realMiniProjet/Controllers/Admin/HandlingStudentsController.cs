@@ -14,6 +14,8 @@ using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
+    [Authorize(Roles = "ADMIN")]
+
     public class HandlingStudentsController : Controller
     {
         private Entities db = new Entities();
@@ -155,7 +157,10 @@ namespace realMiniProjet.Controllers.Admin
                 
                 Student student1 = db.Students.Find(student.Id);
                 AspNetUser modifiedUser = db.AspNetUsers.Find(student1.UserId);
-                student1 = student;
+                student1.Cne = student.Cne;
+                student1.Id = student.Id;
+                student1.Id_fil = student.Id_fil;
+                student1.Id_niv = student.Id_niv;
                 modifiedUser.LastName = lastName;             
                 modifiedUser.FirstName = firstName;
                 modifiedUser.Email = Email;

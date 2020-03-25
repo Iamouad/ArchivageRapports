@@ -12,27 +12,21 @@ namespace realMiniProjet.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Level
+    public partial class Type_Reports
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Level()
+        public Type_Reports()
         {
             this.ArchivedReports = new HashSet<ArchivedReport>();
-            this.Groupes = new HashSet<Groupe>();
             this.Reports = new HashSet<Report>();
-            this.Students = new HashSet<Student>();
         }
     
-        public int Id_niveau { get; set; }
-        public string Nom_niveau { get; set; }
+        public int Id_type { get; set; }
+        public string Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArchivedReport> ArchivedReports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Groupe> Groupes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Report> Reports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Student> Students { get; set; }
     }
 }

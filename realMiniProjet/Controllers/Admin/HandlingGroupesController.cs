@@ -11,11 +11,14 @@ using realMiniProjet.Models.Entities;
 
 namespace realMiniProjet.Controllers.Admin
 {
+    [Authorize]
     public class HandlingGroupesController : Controller
     {
         private Entities db = new Entities();
 
         // GET: HandlingGroupes
+        [Authorize(Roles = "ADMIN")]
+
         public ActionResult Index()
         {
             var groupes = db.Groupes.Include(g => g.AspNetUser);
@@ -23,6 +26,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // GET: HandlingGroupes/Details/5
+        [Authorize(Roles = "ADMIN")]
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +43,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // GET: HandlingGroupes/Create
+        [Authorize(Roles = "ADMIN")]
+
         public ActionResult Create()
         {
             ViewBag.Id_prof = new SelectList(db.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("PROFESSOR")), "Id", "Email");
@@ -49,6 +56,8 @@ namespace realMiniProjet.Controllers.Admin
         // POST: HandlingGroupes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "ADMIN")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe, string id_fil, string id_lev, string[] stdid )
@@ -93,6 +102,8 @@ namespace realMiniProjet.Controllers.Admin
         }
 
         // GET: HandlingGroupes/Edit/5
+        [Authorize(Roles = "ADMIN")]
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -110,20 +121,25 @@ namespace realMiniProjet.Controllers.Admin
 
         // POST: HandlingGroupes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        [Authorize(Roles = "ADMIN")]
+
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe)
+        public ActionResult Edit([Bind(Include = "Id,Id_prof")] Groupe groupe)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(groupe).State = EntityState.Modified;
+                Groupe grp = db.Groupes.Find(groupe.Id);
+                grp.Id_prof = groupe.Id_prof;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.Id_prof = new SelectList(db.AspNetUsers.Where(usr => usr.AspNetRoles.FirstOrDefault().Name.Equals("PROFESSOR")), "Id", "Email", groupe.Id_prof);
             return View(groupe);
         }
+
+        [Authorize(Roles = "ADMIN")]
 
         // GET: HandlingGroupes/Delete/5
         public ActionResult Delete(int? id)
@@ -159,7 +175,7 @@ namespace realMiniProjet.Controllers.Admin
 
         
 
-
+        [Authorize(Roles ="ADMIN")]
         public JsonResult getStudents(string id_f, string id_l)
         {
             int id_fil, id_niv;
@@ -187,7 +203,7 @@ namespace realMiniProjet.Controllers.Admin
            
             return Json(students, JsonRequestBehavior.AllowGet);
         }
-
+        [Authorize(Roles="ADMIN,PROFESSOR,STUDENT")]
         public JsonResult getMembers(string id)
         {
             int id_grp;
@@ -215,9 +231,6 @@ namespace realMiniProjet.Controllers.Admin
                 LastName = std.AspNetUser.LastName
             }).ToList();
 
-
-
-
             /*  return Json(db.AspNetUsers.Select(std => new stdModel
               {
                   FirstName = std.FirstName,
@@ -225,6 +238,8 @@ namespace realMiniProjet.Controllers.Admin
               }).ToList(), JsonRequestBehavior.AllowGet);*/
             return Json(returnList, JsonRequestBehavior.AllowGet);
         }
+
+        [Authorize(Roles = "ADMIN")]
 
         protected override void Dispose(bool disposing)
         {

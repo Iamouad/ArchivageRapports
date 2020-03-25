@@ -16,11 +16,13 @@
     </Key>
     <Property Name="Id_report" Type="int" Nullable="false" />
     <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Id_type" Type="int" Nullable="false" />
+    <Property Name="Id_niv" Type="int" Nullable="false" />
     <Property Name="Id_filiere" Type="int" Nullable="false" />
+    <Property Name="Id_niveau" Type="int" Nullable="false" />
     <Property Name="RemarqueProf" Type="nvarchar" MaxLength="512" Nullable="false" />
     <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
-    <Property Name="DateUniv" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="Likes" Type="int" />
+    <Property Name="DateUniv" Type="date" Nullable="false" />
     <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetRoles">
@@ -108,8 +110,10 @@
     <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Id_filiere" Type="int" Nullable="false" />
     <Property Name="Id_grp" Type="int" Nullable="false" />
+    <Property Name="Id_type" Type="int" Nullable="false" />
+    <Property Name="Id_niv" Type="int" Nullable="false" />
     <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
-    <Property Name="DateUniv" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="DateUniv" Type="date" Nullable="false" />
     <Property Name="DateDepot" Type="date" Nullable="false" />
     <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
   </EntityType>
@@ -139,7 +143,24 @@
     <Property Name="Id_groupe" Type="int" Nullable="false" />
     <Property Name="Id_student" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__ArchivedR__Id_fi__6383C8BA">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Type_Reports">
+    <Key>
+      <PropertyRef Name="Id_type" />
+    </Key>
+    <Property Name="Id_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__ArchivedR__Id_fi__6477ECF3">
     <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
     <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -151,7 +172,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ArchivedR__Id_pr__6477ECF3">
+  <Association Name="FK__ArchivedR__Id_ni__66603565">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
+    <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_niveau" />
+      </Principal>
+      <Dependent Role="ArchivedReports">
+        <PropertyRef Name="Id_niv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ArchivedR__Id_pr__6754599E">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -163,7 +196,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Groupes__Id_fil__6A30C649">
+  <Association Name="FK__ArchivedR__Id_ty__656C112C">
+    <End Role="Type_Reports" Type="Self.Type_Reports" Multiplicity="1" />
+    <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_Reports">
+        <PropertyRef Name="Id_type" />
+      </Principal>
+      <Dependent Role="ArchivedReports">
+        <PropertyRef Name="Id_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Groupes__Id_fil__6D0D32F4">
     <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
     <End Role="Groupes" Type="Self.Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -175,7 +220,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Groupes__Id_niv__6B24EA82">
+  <Association Name="FK__Groupes__Id_niv__6E01572D">
     <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
     <End Role="Groupes" Type="Self.Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -187,7 +232,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Groupes__Id_prof__693CA210">
+  <Association Name="FK__Groupes__Id_prof__6C190EBB">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="Groupes" Type="Self.Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -199,7 +244,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Id_fili__6C190EBB">
+  <Association Name="FK__Reports__Id_fili__6EF57B66">
     <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
     <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -211,7 +256,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Id_grp__6D0D32F4">
+  <Association Name="FK__Reports__Id_grp__6FE99F9F">
     <End Role="Groupes" Type="Self.Groupes" Multiplicity="1" />
     <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -223,7 +268,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Id_prof__6E01572D">
+  <Association Name="FK__Reports__Id_niv__71D1E811">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_niveau" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Id_niv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__Id_prof__72C60C4A">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -235,7 +292,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_ar__71D1E811">
+  <Association Name="FK__Reports__Id_type__70DDC3D8">
+    <End Role="Type_Reports" Type="Self.Type_Reports" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_Reports">
+        <PropertyRef Name="Id_type" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Id_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Students___Id_ar__76969D2E">
     <End Role="ArchivedReports" Type="Self.ArchivedReports" Multiplicity="1" />
     <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
     <ReferentialConstraint>
@@ -247,7 +316,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_gr__73BA3083">
+  <Association Name="FK__Students___Id_gr__787EE5A0">
     <End Role="Groupes" Type="Self.Groupes" Multiplicity="1" />
     <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -259,7 +328,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_st__72C60C4A">
+  <Association Name="FK__Students___Id_st__778AC167">
     <End Role="Students" Type="Self.Students" Multiplicity="1" />
     <End Role="Students_ArchivedReport" Type="Self.Students_ArchivedReport" Multiplicity="*" />
     <ReferentialConstraint>
@@ -271,7 +340,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students___Id_st__74AE54BC">
+  <Association Name="FK__Students___Id_st__797309D9">
     <End Role="Students" Type="Self.Students" Multiplicity="1" />
     <End Role="Students_Groupes" Type="Self.Students_Groupes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -283,7 +352,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__Id_fil__6EF57B66">
+  <Association Name="FK__Students__Id_fil__73BA3083">
     <End Role="Filieres" Type="Self.Filieres" Multiplicity="1" />
     <End Role="Students" Type="Self.Students" Multiplicity="*" />
     <ReferentialConstraint>
@@ -295,7 +364,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__Id_niv__6FE99F9F">
+  <Association Name="FK__Students__Id_niv__74AE54BC">
     <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
     <End Role="Students" Type="Self.Students" Multiplicity="*" />
     <ReferentialConstraint>
@@ -307,7 +376,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Students__UserId__70DDC3D8">
+  <Association Name="FK__Students__UserId__75A278F5">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="Students" Type="Self.Students" Multiplicity="*" />
     <ReferentialConstraint>
@@ -390,63 +459,81 @@
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__ArchivedR__Id_fi__6383C8BA" Association="Self.FK__ArchivedR__Id_fi__6383C8BA">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type_Reports" EntityType="Self.Type_Reports" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ArchivedR__Id_fi__6477ECF3" Association="Self.FK__ArchivedR__Id_fi__6477ECF3">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
     </AssociationSet>
-    <AssociationSet Name="FK__ArchivedR__Id_pr__6477ECF3" Association="Self.FK__ArchivedR__Id_pr__6477ECF3">
+    <AssociationSet Name="FK__ArchivedR__Id_ni__66603565" Association="Self.FK__ArchivedR__Id_ni__66603565">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="ArchivedReports" EntitySet="ArchivedReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ArchivedR__Id_pr__6754599E" Association="Self.FK__ArchivedR__Id_pr__6754599E">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Groupes__Id_fil__6A30C649" Association="Self.FK__Groupes__Id_fil__6A30C649">
+    <AssociationSet Name="FK__ArchivedR__Id_ty__656C112C" Association="Self.FK__ArchivedR__Id_ty__656C112C">
+      <End Role="Type_Reports" EntitySet="Type_Reports" />
+      <End Role="ArchivedReports" EntitySet="ArchivedReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Groupes__Id_fil__6D0D32F4" Association="Self.FK__Groupes__Id_fil__6D0D32F4">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="Groupes" EntitySet="Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Groupes__Id_niv__6B24EA82" Association="Self.FK__Groupes__Id_niv__6B24EA82">
+    <AssociationSet Name="FK__Groupes__Id_niv__6E01572D" Association="Self.FK__Groupes__Id_niv__6E01572D">
       <End Role="Levels" EntitySet="Levels" />
       <End Role="Groupes" EntitySet="Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Groupes__Id_prof__693CA210" Association="Self.FK__Groupes__Id_prof__693CA210">
+    <AssociationSet Name="FK__Groupes__Id_prof__6C190EBB" Association="Self.FK__Groupes__Id_prof__6C190EBB">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Groupes" EntitySet="Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Id_fili__6C190EBB" Association="Self.FK__Reports__Id_fili__6C190EBB">
+    <AssociationSet Name="FK__Reports__Id_fili__6EF57B66" Association="Self.FK__Reports__Id_fili__6EF57B66">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Id_grp__6D0D32F4" Association="Self.FK__Reports__Id_grp__6D0D32F4">
+    <AssociationSet Name="FK__Reports__Id_grp__6FE99F9F" Association="Self.FK__Reports__Id_grp__6FE99F9F">
       <End Role="Groupes" EntitySet="Groupes" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Id_prof__6E01572D" Association="Self.FK__Reports__Id_prof__6E01572D">
+    <AssociationSet Name="FK__Reports__Id_niv__71D1E811" Association="Self.FK__Reports__Id_niv__71D1E811">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__Id_prof__72C60C4A" Association="Self.FK__Reports__Id_prof__72C60C4A">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_ar__71D1E811" Association="Self.FK__Students___Id_ar__71D1E811">
+    <AssociationSet Name="FK__Reports__Id_type__70DDC3D8" Association="Self.FK__Reports__Id_type__70DDC3D8">
+      <End Role="Type_Reports" EntitySet="Type_Reports" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Students___Id_ar__76969D2E" Association="Self.FK__Students___Id_ar__76969D2E">
       <End Role="ArchivedReports" EntitySet="ArchivedReports" />
       <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_gr__73BA3083" Association="Self.FK__Students___Id_gr__73BA3083">
+    <AssociationSet Name="FK__Students___Id_gr__787EE5A0" Association="Self.FK__Students___Id_gr__787EE5A0">
       <End Role="Groupes" EntitySet="Groupes" />
       <End Role="Students_Groupes" EntitySet="Students_Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_st__72C60C4A" Association="Self.FK__Students___Id_st__72C60C4A">
+    <AssociationSet Name="FK__Students___Id_st__778AC167" Association="Self.FK__Students___Id_st__778AC167">
       <End Role="Students" EntitySet="Students" />
       <End Role="Students_ArchivedReport" EntitySet="Students_ArchivedReport" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students___Id_st__74AE54BC" Association="Self.FK__Students___Id_st__74AE54BC">
+    <AssociationSet Name="FK__Students___Id_st__797309D9" Association="Self.FK__Students___Id_st__797309D9">
       <End Role="Students" EntitySet="Students" />
       <End Role="Students_Groupes" EntitySet="Students_Groupes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__Id_fil__6EF57B66" Association="Self.FK__Students__Id_fil__6EF57B66">
+    <AssociationSet Name="FK__Students__Id_fil__73BA3083" Association="Self.FK__Students__Id_fil__73BA3083">
       <End Role="Filieres" EntitySet="Filieres" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__Id_niv__6FE99F9F" Association="Self.FK__Students__Id_niv__6FE99F9F">
+    <AssociationSet Name="FK__Students__Id_niv__74AE54BC" Association="Self.FK__Students__Id_niv__74AE54BC">
       <End Role="Levels" EntitySet="Levels" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK__Students__UserId__70DDC3D8" Association="Self.FK__Students__UserId__70DDC3D8">
+    <AssociationSet Name="FK__Students__UserId__75A278F5" Association="Self.FK__Students__UserId__75A278F5">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>

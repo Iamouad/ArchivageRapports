@@ -3,121 +3,117 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using realMiniProjet.Models.Entities;
 
-namespace realMiniProjet.Controllers
+namespace realMiniProjet.Controllers.Admin
 {
     [Authorize(Roles ="ADMIN")]
-    public class GroupesController : Controller
+    public class TypeReportsController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: Groupes
-        public ActionResult Index()
+        // GET: TypeReports
+        public async Task<ActionResult> Index()
         {
-            var groupes = db.Groupes.Include(g => g.AspNetUser);
-            return View(groupes.ToList());
+            return View(await db.Type_Reports.ToListAsync());
         }
 
-        // GET: Groupes/Details/5
-        public ActionResult Details(int? id)
+        // GET: TypeReports/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Groupe groupe = db.Groupes.Find(id);
-            if (groupe == null)
+            Type_Reports type_Reports = await db.Type_Reports.FindAsync(id);
+            if (type_Reports == null)
             {
                 return HttpNotFound();
             }
-            return View(groupe);
+            return View(type_Reports);
         }
 
-        // GET: Groupes/Create
+        // GET: TypeReports/Create
         public ActionResult Create()
         {
-            ViewBag.Id_prof = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
-        // POST: Groupes/Create
+        // POST: TypeReports/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Id_prof,Id_fil,Id_level")] Groupe groupe)
+        public async Task<ActionResult> Create([Bind(Include = "Id_type,Type")] Type_Reports type_Reports)
         {
             if (ModelState.IsValid)
             {
-                db.Groupes.Add(groupe);
-                db.SaveChanges();
+                db.Type_Reports.Add(type_Reports);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id_prof = new SelectList(db.AspNetUsers, "Id", "Email", groupe.Id_prof);
-            return View(groupe);
+            return View(type_Reports);
         }
 
-        // GET: Groupes/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: TypeReports/Edit/5
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Groupe groupe = db.Groupes.Find(id);
-            if (groupe == null)
+            Type_Reports type_Reports = await db.Type_Reports.FindAsync(id);
+            if (type_Reports == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id_prof = new SelectList(db.AspNetUsers, "Id", "Email", groupe.Id_prof);
-            return View(groupe);
+            return View(type_Reports);
         }
 
-        // POST: Groupes/Edit/5
+        // POST: TypeReports/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Id_prof,Delais")] Groupe groupe)
+        public async Task<ActionResult> Edit([Bind(Include = "Id_type,Type")] Type_Reports type_Reports)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(groupe).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Entry(type_Reports).State = EntityState.Modified;
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Id_prof = new SelectList(db.AspNetUsers, "Id", "Email", groupe.Id_prof);
-            return View(groupe);
+            return View(type_Reports);
         }
 
-        // GET: Groupes/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: TypeReports/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Groupe groupe = db.Groupes.Find(id);
-            if (groupe == null)
+            Type_Reports type_Reports = await db.Type_Reports.FindAsync(id);
+            if (type_Reports == null)
             {
                 return HttpNotFound();
             }
-            return View(groupe);
+            return View(type_Reports);
         }
 
-        // POST: Groupes/Delete/5
+        // POST: TypeReports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Groupe groupe = db.Groupes.Find(id);
-            db.Groupes.Remove(groupe);
-            db.SaveChanges();
+            Type_Reports type_Reports = await db.Type_Reports.FindAsync(id);
+            db.Type_Reports.Remove(type_Reports);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
