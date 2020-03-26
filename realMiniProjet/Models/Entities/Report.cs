@@ -21,7 +21,7 @@ namespace realMiniProjet.Models.Entities
         public int Id_type { get; set; }
         public int Id_niv { get; set; }
         public string ReportPath { get; set; }
-        public System.DateTime DateUniv { get; set; }
+        public string DateUniv { get; set; }
         public System.DateTime DateDepot { get; set; }
         public string Sujet { get; set; }
     

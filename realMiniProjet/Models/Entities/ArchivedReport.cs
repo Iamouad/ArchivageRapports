@@ -28,7 +28,7 @@ namespace realMiniProjet.Models.Entities
         public int Id_niveau { get; set; }
         public string RemarqueProf { get; set; }
         public string ReportPath { get; set; }
-        public System.DateTime DateUniv { get; set; }
+        public string DateUniv { get; set; }
         public string Sujet { get; set; }
     
         public virtual Filiere Filiere { get; set; }

@@ -21,9 +21,9 @@
     <Property Name="Id_filiere" Type="int" Nullable="false" />
     <Property Name="Id_niveau" Type="int" Nullable="false" />
     <Property Name="RemarqueProf" Type="nvarchar" MaxLength="512" Nullable="false" />
-    <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
-    <Property Name="DateUniv" Type="date" Nullable="false" />
-    <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="ReportPath" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DateUniv" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Sujet" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -112,8 +112,8 @@
     <Property Name="Id_grp" Type="int" Nullable="false" />
     <Property Name="Id_type" Type="int" Nullable="false" />
     <Property Name="Id_niv" Type="int" Nullable="false" />
-    <Property Name="ReportPath" Type="nvarchar" MaxLength="512" Nullable="false" />
-    <Property Name="DateUniv" Type="date" Nullable="false" />
+    <Property Name="ReportPath" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DateUniv" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="DateDepot" Type="date" Nullable="false" />
     <Property Name="Sujet" Type="nvarchar" MaxLength="512" Nullable="false" />
   </EntityType>
@@ -142,16 +142,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Id_groupe" Type="int" Nullable="false" />
     <Property Name="Id_student" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Type_Reports">
     <Key>
@@ -459,7 +449,6 @@
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type_Reports" EntityType="Self.Type_Reports" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__ArchivedR__Id_fi__6477ECF3" Association="Self.FK__ArchivedR__Id_fi__6477ECF3">
       <End Role="Filieres" EntitySet="Filieres" />

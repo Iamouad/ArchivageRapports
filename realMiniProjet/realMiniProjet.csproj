@@ -304,9 +304,6 @@
     <Compile Include="Models\Entities\Students_Groupes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Type_Reports.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

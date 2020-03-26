@@ -21,9 +21,9 @@
     <Property Name="Id_filiere" Type="Int32" Nullable="false" />
     <Property Name="Id_niveau" Type="Int32" Nullable="false" />
     <Property Name="RemarqueProf" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ReportPath" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="DateUniv" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Sujet" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReportPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateUniv" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sujet" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Filiere" Relationship="Self.FK__ArchivedR__Id_fi__6477ECF3" FromRole="ArchivedReports" ToRole="Filieres" />
     <NavigationProperty Name="Level" Relationship="Self.FK__ArchivedR__Id_ni__66603565" FromRole="ArchivedReports" ToRole="Levels" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__ArchivedR__Id_pr__6754599E" FromRole="ArchivedReports" ToRole="AspNetUsers" />
@@ -132,8 +132,8 @@
     <Property Name="Id_grp" Type="Int32" Nullable="false" />
     <Property Name="Id_type" Type="Int32" Nullable="false" />
     <Property Name="Id_niv" Type="Int32" Nullable="false" />
-    <Property Name="ReportPath" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="DateUniv" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReportPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateUniv" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="DateDepot" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Sujet" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Reports__Id_prof__72C60C4A" FromRole="Reports" ToRole="AspNetUsers" />
@@ -176,16 +176,6 @@
     <Property Name="Id_student" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Groupe" Relationship="Self.FK__Students___Id_gr__787EE5A0" FromRole="Students_Groupes" ToRole="Groupes" />
     <NavigationProperty Name="Student" Relationship="Self.FK__Students___Id_st__797309D9" FromRole="Students_Groupes" ToRole="Students" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Type_Reports">
     <Key>
@@ -470,7 +460,6 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="Students_ArchivedReport" EntityType="Self.Students_ArchivedReport" />
     <EntitySet Name="Students_Groupes" EntityType="Self.Students_Groupes" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Type_Reports" EntityType="Self.Type_Reports" />
     <AssociationSet Name="FK__ArchivedR__Id_fi__6477ECF3" Association="Self.FK__ArchivedR__Id_fi__6477ECF3">
       <End Role="Filieres" EntitySet="Filieres" />

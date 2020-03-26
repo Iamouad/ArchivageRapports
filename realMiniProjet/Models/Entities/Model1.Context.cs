@@ -38,7 +38,6 @@ namespace realMiniProjet.Models.Entities
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Students_ArchivedReport> Students_ArchivedReport { get; set; }
         public virtual DbSet<Students_Groupes> Students_Groupes { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Type_Reports> Type_Reports { get; set; }
     }
 }
