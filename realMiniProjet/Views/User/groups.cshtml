@@ -23,7 +23,10 @@
                         }
                         <th align="left" class="productth">Members</th>
                         <th align="left" class="productth"></th>
-                        <th align="left" class="productth">Sujet</th>
+                        @if (User.IsInRole("PROFESSOR"))
+                        {
+                            <th align="left" class="productth">Sujet</th>
+                        }
                         <th align="left" class="productth">Rapport</th>
                         @if (User.IsInRole("PROFESSOR"))
                         {
@@ -58,23 +61,21 @@
                         <td>
                             <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
                         </td>
-                        @if (!String.IsNullOrWhiteSpace(item.Reports.FirstOrDefault().Sujet))
+                       
+
+                        @if (User.IsInRole("PROFESSOR") && item.Reports != null)
                         {
                             <td class="col-md-4">
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
                             </td>
-                        }
-
-                        @if (User.IsInRole("PROFESSOR"))
-                        {
                             <td>
-                                @Html.ActionLink("Download", "GetReport", new { reportId = item.Reports.FirstOrDefault().Id_report })
+                                @Html.ActionLink("Download", "GetReport")
                             </td>
                         }
                         @if (User.IsInRole("STUDENT"))
                         {
                             <td>
-                                @Html.ActionLink("UPLOAD", "GetReport", new { reportId = item.Reports.FirstOrDefault().Id_report })
+                                @Html.ActionLink("UPLOAD", "GetReport" )
                             </td>
                         }
 
