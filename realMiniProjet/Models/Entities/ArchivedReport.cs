@@ -25,7 +25,6 @@ namespace realMiniProjet.Models.Entities
         public int Id_type { get; set; }
         public int Id_niv { get; set; }
         public int Id_filiere { get; set; }
-        public int Id_niveau { get; set; }
         public string RemarqueProf { get; set; }
         public string ReportPath { get; set; }
         public string DateUniv { get; set; }

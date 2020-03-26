@@ -420,6 +420,7 @@
     <Content Include="Views\TypeReports\Details.cshtml" />
     <Content Include="Views\TypeReports\Edit.cshtml" />
     <Content Include="Views\TypeReports\Index.cshtml" />
+    <Content Include="Views\Professor\archiveForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

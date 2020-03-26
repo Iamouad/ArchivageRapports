@@ -31,6 +31,7 @@
                         @if (User.IsInRole("PROFESSOR"))
                         {
                             <th align="left" class="productth">Date de dépot</th>
+                            <th></th>
                         }
 
 
@@ -61,7 +62,7 @@
                         <td>
                             <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
                         </td>
-                       
+
 
                         @if (User.IsInRole("PROFESSOR") && item.Reports != null)
                         {
@@ -75,7 +76,7 @@
                         @if (User.IsInRole("STUDENT"))
                         {
                             <td>
-                                @Html.ActionLink("UPLOAD", "GetReport" )
+                                @Html.ActionLink("UPLOAD", "GetReport", new { id = "" })
                             </td>
                         }
 
@@ -84,6 +85,12 @@
                         {
                             <td>
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
+                            </td>
+                        }
+                        @if (User.IsInRole("PROFESSOR"))
+                        {
+                            <td>
+                                @Html.ActionLink("Archiver", "ArchiveReport","PROFESSOR", new { idGrp=item.Id}, null)
                             </td>
                         }
 

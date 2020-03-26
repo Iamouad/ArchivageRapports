@@ -19,12 +19,11 @@
           <Key>
             <PropertyRef Name="Id_report" />
           </Key>
-          <Property Name="Id_report" Type="int" Nullable="false" />
+          <Property Name="Id_report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Id_type" Type="int" Nullable="false" />
           <Property Name="Id_niv" Type="int" Nullable="false" />
           <Property Name="Id_filiere" Type="int" Nullable="false" />
-          <Property Name="Id_niveau" Type="int" Nullable="false" />
           <Property Name="RemarqueProf" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="ReportPath" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="DateUniv" Type="nvarchar" MaxLength="256" Nullable="false" />
@@ -567,12 +566,11 @@
           <Key>
             <PropertyRef Name="Id_report" />
           </Key>
-          <Property Name="Id_report" Type="Int32" Nullable="false" />
+          <Property Name="Id_report" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_prof" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_type" Type="Int32" Nullable="false" />
           <Property Name="Id_niv" Type="Int32" Nullable="false" />
           <Property Name="Id_filiere" Type="Int32" Nullable="false" />
-          <Property Name="Id_niveau" Type="Int32" Nullable="false" />
           <Property Name="RemarqueProf" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ReportPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateUniv" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1127,7 +1125,6 @@
                 <ScalarProperty Name="Id_type" ColumnName="Id_type" />
                 <ScalarProperty Name="Id_niv" ColumnName="Id_niv" />
                 <ScalarProperty Name="Id_filiere" ColumnName="Id_filiere" />
-                <ScalarProperty Name="Id_niveau" ColumnName="Id_niveau" />
                 <ScalarProperty Name="RemarqueProf" ColumnName="RemarqueProf" />
                 <ScalarProperty Name="ReportPath" ColumnName="ReportPath" />
                 <ScalarProperty Name="DateUniv" ColumnName="DateUniv" />

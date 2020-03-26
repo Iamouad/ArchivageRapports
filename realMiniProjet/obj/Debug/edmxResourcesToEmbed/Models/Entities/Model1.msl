@@ -19,7 +19,6 @@
           <ScalarProperty Name="Id_type" ColumnName="Id_type" />
           <ScalarProperty Name="Id_niv" ColumnName="Id_niv" />
           <ScalarProperty Name="Id_filiere" ColumnName="Id_filiere" />
-          <ScalarProperty Name="Id_niveau" ColumnName="Id_niveau" />
           <ScalarProperty Name="RemarqueProf" ColumnName="RemarqueProf" />
           <ScalarProperty Name="ReportPath" ColumnName="ReportPath" />
           <ScalarProperty Name="DateUniv" ColumnName="DateUniv" />

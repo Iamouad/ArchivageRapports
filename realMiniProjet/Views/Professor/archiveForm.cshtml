@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "archiveForm";
+}
+
+<h2>Form d'archivage</h2>
+
+@using (Html.BeginForm("ArchiveReport","PROFESSOR",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Date universitaire", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            @Html.TextArea("dateUniv", null, new { @class = "form-control", @rows = "5", @placeholder = "AAAA/AAAA", @Value = @ViewBag.anneeUniv })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Sujet de rapport", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            @Html.TextArea("sujet", null, new { @class = "form-control", @rows = "5", @Value = @ViewBag.sujet })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Remarques", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            @Html.TextArea("remarques", null, new { @class = "form-control", @rows = "5", @placeholder = "Remarques" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="hidden" value="@ViewBag.idReport" name="idReport" />
+            <input type="submit" value="Archiver" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

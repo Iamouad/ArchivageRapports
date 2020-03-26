@@ -14,12 +14,11 @@
     <Key>
       <PropertyRef Name="Id_report" />
     </Key>
-    <Property Name="Id_report" Type="int" Nullable="false" />
+    <Property Name="Id_report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Id_prof" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Id_type" Type="int" Nullable="false" />
     <Property Name="Id_niv" Type="int" Nullable="false" />
     <Property Name="Id_filiere" Type="int" Nullable="false" />
-    <Property Name="Id_niveau" Type="int" Nullable="false" />
     <Property Name="RemarqueProf" Type="nvarchar" MaxLength="512" Nullable="false" />
     <Property Name="ReportPath" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="DateUniv" Type="nvarchar" MaxLength="256" Nullable="false" />
