@@ -125,16 +125,25 @@ namespace realMiniProjet.Controllers
 
                     Report newRepport = new Report();
 
-                    repport.Id_grp = grp.Id;
-                    repport.Id_filiere = grp.Id_fil;
-                    repport.Id_niv = grp.Id_niv;
-                    repport.Id_prof = grp.Id_prof;
-                    repport.Id_type = Id_Type.Value;
-                    repport.Sujet = sujet;
-                    repport.ReportPath = newName;
-                    repport.DateDepot = DateTime.Now;
-                    repport.DateUniv = "2019-2020";
-                    db.Reports.Add(repport);
+                    newRepport.Id_grp = grp.Id;
+                    newRepport.Id_filiere = grp.Id_fil;
+                    newRepport.Id_niv = grp.Id_niv;
+                    newRepport.Id_prof = grp.Id_prof;
+                    newRepport.Id_type = Id_Type.Value;
+                    newRepport.Sujet = sujet;
+                    newRepport.ReportPath = newName;
+                    newRepport.DateDepot = DateTime.Now;
+
+                    if(newRepport.DateDepot.Month < 7)
+                    {
+                        newRepport.DateUniv = (newRepport.DateDepot.Year - 1) + "-" + newRepport.DateDepot.Year;
+                    }
+                    else
+                    {
+                        newRepport.DateUniv = newRepport.DateDepot.Year + "-" + (newRepport.DateDepot.Year + 1);
+                    }
+
+                    db.Reports.Add(newRepport);
 
                     db.SaveChanges();
                     ViewBag.Message = "File uploaded successfully";
