@@ -64,31 +64,32 @@
                         </td>
 
 
-                        @if (User.IsInRole("PROFESSOR") && item.Reports != null)
+                        @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
                         {
-                            <td class="col-md-4">
+                            <td class="col-md-3">
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
                             </td>
                             <td>
-                                @Html.ActionLink("Download", "GetReport")
-                            </td>
+                                @{ 
+                                    String fullPath = "../Content/Files/" + item.Reports.FirstOrDefault().ReportPath;
+                                }
+                                <a href="@fullPath" target="_blank" >Download</a>
+                         </td>
                         }
                         @if (User.IsInRole("STUDENT"))
                         {
                             <td>
-                                @Html.ActionLink("UPLOAD", "GetReport", new { id = "" })
+                                @Html.ActionLink("UPLOAD", "uploadReport", "Student", new { idGrp = item.Id },null)
                             </td>
                         }
 
 
-                        @if (User.IsInRole("PROFESSOR"))
+                        @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
                         {
                             <td>
                                 @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
-                            </td>
-                        }
-                        @if (User.IsInRole("PROFESSOR"))
-                        {
+                            </td>                       
+                       
                             <td>
                                 @Html.ActionLink("Archiver", "ArchiveReport","PROFESSOR", new { idGrp=item.Id}, null)
                             </td>

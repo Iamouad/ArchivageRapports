@@ -471,3 +471,12 @@ C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\System.Me
 C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\System.Numerics.Vectors.xml
 C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\System.Threading.Tasks.Extensions.xml
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\ClosedXML.dll
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\DocumentFormat.OpenXml.dll
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\ExcelNumberFormat.dll
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\FastMember.dll
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\System.IO.Packaging.dll
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\ClosedXML.pdb
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\ClosedXML.xml
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\DocumentFormat.OpenXml.xml
+C:\Users\lenovo\Desktop\csharpProject\ReportsCsharp\realMiniProjet\bin\ExcelNumberFormat.xml

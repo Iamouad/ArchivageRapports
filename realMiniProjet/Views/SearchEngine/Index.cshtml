@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Searching";
+}
+
+@model realMiniProjet.Models.Entities.Filiere
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+</script>
+
+
+
+<script>
+
+    const seedTheDiv = function () {
+
+        console.log("changed")
+
+        $.get("/SearchEngine/GetReports", {
+            FilId: $("#selectedFil").val(),
+            SearchedBy: $("#searchBy").val(),
+            SearchedText: $("#search").val(),
+            profId: $("#selectedProf").val(),
+            Id_Type: $("#selectedType").val(),
+            Id_niveau: $("#selectedNiveau").val()
+        }, function (data) {
+
+            $("#contenu").empty();
+
+                $.each(data, function (index, ligne) {
+
+
+                    $("#contenu").append("" +
+                      "  <a href=\""+ ligne.path +"\" target=\"_blank\">"+
+
+                "    <div class=\"container report\">                                                                                    "+
+                "      <div class=\"row\">                                                                                          "+
+                "        <div class=\"col-xs-9\">                                                                                  "+
+                "          <div class=\"row sujet\">                                                                                      "+
+                "            <div class=\"col-xs-3\"><span class=\"title\">sujet:</span></div>                                                            "+
+                "            <div class=\"col-xs-9\">                                                                              "+
+                        ligne.sujet +
+                "            </div>                                                                                                    "+
+                "          </div>                                                                                                      "+
+                "          <div class=\"row\">                                                                                      "+
+                "            <div class=\"col-xs-3\"><span class=\"title\">remarque du prof:</span></div>                                         "+
+                        "            <div class=\"col-xs-9\">                                                                              " +
+                        ligne.remarque +
+                "            </div>                                                                                                    "+
+                "          </div>                                                                                                      "+
+                "        </div>                                                                                                        "+
+                "                                                                                                                          "+
+                        "        <div class=\"col-xs-3\">                                                                                  " +
+                        "          <div class=\"row\"><span class=\"title\">prof :</span>" + ligne.Encadrant + "</div>                                                     " +
+                        "          <div class=\"row\"><span class=\"title\">filiere : </span>" + ligne.Filiere + "</div>                                   " +
+                                        "          <div class=\"row\"><span class=\"title\">niveau : </span>" + ligne.niveau + "</div>                                              "+
+                "          <div class=\"row\"><span class=\"title\">niveau : </span>" + ligne.type + "</div>                                              "+
+                "          <div class=\"row\"><span class=\"title\">Annee Universitaire :</span> " + ligne.Au + "</div>                             "+
+                "        </div>                                                                                                        "+
+                "      </div>                                                                                                          "+
+                        "    </div>                                                                                                            " +
+                        "</a>"
+                    )
+            });
+        })
+    }
+    $(function () {
+        $("#search").keyup(function () {
+            seedTheDiv()
+        });
+    });
+
+    $(function () {
+        $("#selectedFil, #searchBy, #selectedProf, #selectedType, #selectedNiveau").change(function () {
+            seedTheDiv()
+        });
+    });
+
+
+</script>
+
+
+<style>
+    input:focus {
+        outline: none;
+        border: 0;
+    }
+
+    .form-control:focus {
+        border-color: inherit;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    #search {
+        border: 0;
+    }
+
+    .groupe-form {
+        padding: 5px;
+    }
+
+    .title {
+        color: #04b6e6;
+    }
+
+    .report {
+        border-left: 2px solid #04b6e6;
+        margin-top: 2px;
+        padding: 10px;
+        padding-top: 30px;
+        transition: 1s;
+    }
+
+        .report:hover {
+            box-shadow: rgb(174, 216, 226) 4px 0px 20px;
+        }
+
+    .sujet {
+        margin-bottom: 6px;
+    }
+
+    #searchBar {
+        border-bottom: #04b6e6 2px solid;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<form class="container ">
+    <div id="searchBar" class="row">
+        <input placeholder="Type Keywords"
+               class="form-control col-md-12"
+               type="text"
+               id="search" />
+    </div>
+    <div class="row">
+
+        <div class="col-md-4 form-group">
+            <label for="searchBy">Type</label>
+            @Html.DropDownList("Id_Type", ViewBag.type as SelectList, "selectionner le Type", new { @class = "form-control", name = "type", id = "selectedType" })
+        </div>
+        <div class="col-md-4 form-group">
+            <label for="searchBy">Filiere</label>
+            @Html.DropDownListFor(x => x.Id_filiere, ViewBag.f as SelectList, "selectionner la filiere", new { @class = "form-control", name = "fil", id = "selectedFil" })
+        </div>
+        <div class="col-md-4 form-group">
+            <label for="searchBy">Niveau</label>
+            @Html.DropDownList("Id_niveau", ViewBag.niveau as SelectList, "selectionner niveau", new { @class = "form-control", name = "niveau", id = "selectedNiveau" })
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-4 col-md-offset-2 form-group">
+            <label for="searchBy">Annee Universitaire</label>
+            @Html.DropDownList("au", ViewBag.Au as SelectList, "selectionner l'annee Universitaire", new { @class = "form-control", name = "au", id = "selectedAu" })
+        </div>
+        <div class="col-md-4 form-group">
+            <label for="searchBy">Prof</label>
+            @Html.DropDownList("Id", ViewBag.prof as SelectList, "selectionner Encadrant", new { @class = "form-control", name = "prof", id = "selectedProf" })
+        </div>
+    </div>
+    <div name="student" id="contenu"></div>
+</form>
+
+<div name="student" id="contenu">
+</div>

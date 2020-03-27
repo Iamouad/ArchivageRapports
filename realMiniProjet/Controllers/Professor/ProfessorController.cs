@@ -70,7 +70,7 @@ namespace realMiniProjet.Controllers.Professor
                     Sujet = sujet,
                     RemarqueProf = remarques,
                     //////////////////:path of the report archived/////////////
-                    ReportPath = "a saisir"
+                    ReportPath = report.ReportPath
                 };
                 Groupe grp = db.Groupes.Find(report.Id_grp);
                 db.ArchivedReports.Add(archived);

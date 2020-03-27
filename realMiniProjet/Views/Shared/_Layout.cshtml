@@ -32,20 +32,20 @@
                             <li>@Html.ActionLink("Students", "Index", "HandlingStudents")</li>
                             <li>@Html.ActionLink("Professors", "Index", "HandlingProfessors")</li>
                             <li>@Html.ActionLink("Groupes", "Index", "HandlingGroupes")</li>
-                            <li>@Html.ActionLink("Library", "Index", "LibraryController")</li>
+                            <li>@Html.ActionLink("Library", "Index", "SearchEngine")</li>
                         }
                         else if (User.IsInRole("PROFESSOR"))
                         {
                             <li>@Html.ActionLink("Home", "Index", "Professor")</li>
                             <li>@Html.ActionLink("My groups", "MyGroups", "User")</li>
-                            <li>@Html.ActionLink("Library", "Index", "LibraryController")</li>
+                            <li>@Html.ActionLink("Library", "Index", "SearchEngine")</li>
 
                         }
                         else if (User.IsInRole("STUDENT"))
                         {
                             <li>@Html.ActionLink("Home", "Index", "STUDENT")</li>
                             <li>@Html.ActionLink("My groups", "MyGroups", "User")</li>
-                            <li>@Html.ActionLink("Library", "Index", "LibraryController")</li>
+                            <li>@Html.ActionLink("Library", "Index", "SearchEngine")</li>
 
                         }
                     }
