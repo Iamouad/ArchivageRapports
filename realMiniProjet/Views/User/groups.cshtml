@@ -75,7 +75,7 @@
                         @if (User.IsInRole("STUDENT"))
                         {
                             <td>
-                                @Html.ActionLink("UPLOAD", "GetReport" )
+                                @Html.ActionLink("Upload", "UploadReport" , new { groupeId = item.Id})
                             </td>
                         }
 

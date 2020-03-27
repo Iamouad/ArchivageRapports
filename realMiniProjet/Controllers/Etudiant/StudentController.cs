@@ -17,5 +17,7 @@ namespace realMiniProjet.Controllers.Etudiant
             return View();
         }
 
+
+
     }
 }

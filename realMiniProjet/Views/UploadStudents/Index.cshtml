@@ -1,0 +1,79 @@
+﻿
+@model IEnumerable<realMiniProjet.Models.Entities.AspNetUser>
+
+
+
+<h2>Upload Students</h2>
+@using (Html.BeginForm("uploadFile",
+                        "UploadStudents",
+                        FormMethod.Post,
+                        new { id = "uploadForm", enctype = "multipart/form-data" }
+                       ))
+{
+
+
+
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Nivau :</label>
+        <select name="niv" class="form-control">
+            @foreach (var niveau in ViewBag.niveaux)
+            {
+                <option value="@niveau.Id_niveau">@niveau.Nom_niveau</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Filiere :</label>
+        <select name="fil" class="form-control">
+            @foreach (var filiere in ViewBag.filieres)
+            {
+                <option value="@filiere.Id_filiere">@filiere.Nom_filiere</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="file">Upload Student:</label>
+        <input type="file" name="file" id="file" />
+    </div>
+
+    <input type="submit" value="Upload Students" />
+
+    <br>
+    <br>
+
+    @ViewBag.Message
+    <a href=" @ViewBag.path">link</a>
+
+    @ViewBag.fileMime
+    <hr />
+
+    @ViewBag.nom
+    @ViewBag.prenom
+    @ViewBag.cne
+    @ViewBag.filiere
+    @ViewBag.niveau
+
+
+    if (Model != null)
+    {
+        foreach (var user in Model)
+        {
+            <p>
+                nom : @user.FirstName <br />
+                prenom : @user.LastName <br />
+                email : @user.Email <br />
+            </p>
+        }
+    }
+    <span>hello</span>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
