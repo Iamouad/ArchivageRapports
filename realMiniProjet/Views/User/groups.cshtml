@@ -11,93 +11,102 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
+        @if(Model.Count() == 0)
+        {
+            <h1 class="text-center">No data to be shown !!!</h1>
+        }
         <div>
             <table id="tblGrps" class="table table-bordered table-striped table-responsive table-hover">
-                <thead>
-                    <tr>
-                        <th align="left" class="productth">Classe</th>
-                        @if (User.IsInRole("STUDENT"))
-                        {
-                            <th align="left" class="productth">Encadrant</th>
-                        }
-                        <th align="left" class="productth">Members</th>
-                        <th align="left" class="productth"></th>
-                        @if (User.IsInRole("PROFESSOR"))
-                        {
-                            <th align="left" class="productth">Sujet</th>
-                        }
-                        <th align="left" class="productth">Rapport</th>
-                        @if (User.IsInRole("PROFESSOR"))
-                        {
-                            <th align="left" class="productth">Date de dépot</th>
-                            <th></th>
-                        }
+                @if (Model.Count > 0)
+                {
+                    <thead>
+                        <tr>
+                            <th align="left" class="productth">Classe</th>
+                            @if (User.IsInRole("STUDENT"))
+                            {
+                                <th align="left" class="productth">Encadrant</th>
+                            }
+                            <th align="left" class="productth">Members</th>
+                            <th align="left" class="productth"></th>
+                            @if (User.IsInRole("PROFESSOR"))
+                            {
+                                <th align="left" class="productth">Sujet</th>
+                            }
+                            <th align="left" class="productth">Rapport</th>
+                            @if (User.IsInRole("PROFESSOR"))
+                            {
+                                <th align="left" class="productth">Date de dépot</th>
+                                <th></th>
+                            }
 
 
-                    </tr>
-                </thead>
+                        </tr>
+                    </thead>
+                }
+
                 <tbody>
                     @foreach (var item in @Model)
                     {
                         String classeName = item.Level.Nom_niveau + " " + item.Filiere.Nom_filiere;
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => classeName)
-                        </td>
-                        @if (User.IsInRole("STUDENT"))
-                        {
-                            Entities entities = new Entities();
-                            AspNetUser enc = entities.AspNetUsers.Find(item.Id_prof);
-                            string encName = enc.FirstName + " " + enc.LastName;
-
+                        <tr>
                             <td>
-                                @encName
+                                @Html.DisplayFor(modelItem => classeName)
                             </td>
-                        }
-                        <td class="col-md-2">
-                            @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
+                            @if (User.IsInRole("STUDENT"))
+                            {
+                                Entities entities = new Entities();
+                                AspNetUser enc = entities.AspNetUsers.Find(item.Id_prof);
+                                string encName = enc.FirstName + " " + enc.LastName;
 
-                        </td>
-                        <td>
-                            <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
-                        </td>
+                                <td>
+                                    @encName
+                                </td>
+                            }
+                            <td class="col-md-2">
+                                @Html.DropDownList("members" + item.Id, new SelectList(""), htmlAttributes: new { @class = "form-control", @id = "grp" + item.Id })
 
-
-                        @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
-                        {
-                            <td class="col-md-3">
-                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
                             </td>
                             <td>
-                                @{ 
-                                    String fullPath = "../Content/Files/" + item.Reports.FirstOrDefault().ReportPath;
-                                }
-                                <a href="@fullPath" target="_blank" >Download</a>
-                         </td>
-                        }
-                        @if (User.IsInRole("STUDENT"))
-                        {
-                            <td>
-                                @Html.ActionLink("UPLOAD", "uploadReport", "Student", new { idGrp = item.Id },null)
+                                <button id="@item.Id" onclick='showMembers(this.id)' class="btn-sm btn-primary">show members</button>
                             </td>
-                        }
 
 
-                        @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
-                            </td>                       
-                       
-                            <td>
-                                @Html.ActionLink("Archiver", "ArchiveReport","PROFESSOR", new { idGrp=item.Id}, null)
-                            </td>
-                        }
+                            @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
+                            {
+                                <td class="col-md-3">
+                                    @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().Sujet)
+                                </td>
+                                <td>
+                                    @{
+                                        String fullPath = "../Content/Files/" + item.Reports.FirstOrDefault().ReportPath;
+                                    }
+                                    <a href="@fullPath" target="_blank">Download</a>
+                                </td>
+                            }
+                            @if (User.IsInRole("STUDENT"))
+                            {
+                                <td>
+                                    @Html.ActionLink("UPLOAD", "uploadReport", "Student", new { idGrp = item.Id }, null)
+                                </td>
+                            }
+
+
+                            @if (User.IsInRole("PROFESSOR") && item.Reports.Count > 0)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Reports.FirstOrDefault().DateDepot)
+                                </td>
 
 
 
-                    </tr>
+                                <td>
+                                    @Html.ActionLink("Archiver", "ArchiveReport", "PROFESSOR", new { idGrp = item.Id }, null)
+                                </td>
+                            }
+
+
+
+                        </tr>
                     }
                 </tbody>
             </table>

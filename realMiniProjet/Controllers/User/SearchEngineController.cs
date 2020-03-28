@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace realMiniProjet.Controllers
 {
+    [Authorize]
     public class SearchEngineController : Controller
     {
         // GET: SearchEngine

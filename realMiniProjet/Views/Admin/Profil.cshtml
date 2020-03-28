@@ -4,22 +4,46 @@
 }
 
 <h2>Hello Admin</h2>
-<div>
-    <div>
-        @Html.ActionLink("Manage professors", "Index", "HandlingProfessors")
-    </div>
-    <div>
-        @Html.ActionLink("Manage students", "Index", "HandlingStudents")
-    </div>
-    <div>
-        @Html.ActionLink("Manage branches", "Index", "Filieres")
-    </div>
-    <div>
-        @Html.ActionLink("Manage levels", "Index", "Levels")
-    </div>
-   
-    <div>
-        @Html.ActionLink("Manage groupes", "Index", "HandlingGroupes")
+
+<br />
+
+<div class="alert alert-primary">
+    <p>All the following users have access to the library where they can search for all kind of reports.</p>
+</div>
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <div cl5ass="card-body">
+                    <h3 class="card-title">Professors</h3>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">The professor can, visualize his groupes, leave notes and approve reports by sending them to the library archive</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Students</h3>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">The student can see his group, upload repports and access to the library where he'll be able to benify from the diversty of reports and also notes left by the professors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Groups</h3>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">The groups is the section where you can create one or access to the existing ones and visualize all the belonging members.</p>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 

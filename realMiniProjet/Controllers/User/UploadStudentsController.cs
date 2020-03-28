@@ -14,6 +14,7 @@ using AspNetUser = realMiniProjet.Models.Entities.AspNetUser;
 
 namespace realMiniProjet.Controllers.UploadStudent
 {
+    [Authorize(Roles ="ADMIN")]
     public class UploadStudentsController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -108,7 +109,7 @@ namespace realMiniProjet.Controllers.UploadStudent
 
                                 if (exist.FirstOrDefault() == null)
                                 {
-                                    var result = UserManager.Create(user, "Password123@");
+                                    var result = UserManager.Create(user, LastName.ToLower()+"."+cne);
                                     if (result.Succeeded)
                                     {
                                         AspNetRole role = dc.AspNetRoles.Where(rl => rl.Name.Equals("STUDENT")).FirstOrDefault();

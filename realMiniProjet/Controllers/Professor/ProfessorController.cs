@@ -60,6 +60,10 @@ namespace realMiniProjet.Controllers.Professor
                 {
                     throw new Exception("Operation can't be done!!!");
                 }
+                if (String.IsNullOrWhiteSpace(dateUniv))
+                {
+                    dateUniv = report.DateUniv;
+                }
                 ArchivedReport archived = new ArchivedReport
                 {
                     Id_prof = currentUsr,
